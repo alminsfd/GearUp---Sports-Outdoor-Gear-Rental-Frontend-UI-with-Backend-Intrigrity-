@@ -1,1 +1,5 @@
-export default function Component() { return <div>Work in progress...</div>; }
+export const dynamic = "force-dynamic";
+
+export default function GearPage() {
+     return <div>Work in progress...</div>;
+}
