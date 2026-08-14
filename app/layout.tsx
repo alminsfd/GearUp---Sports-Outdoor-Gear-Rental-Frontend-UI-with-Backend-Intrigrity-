@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Outfit, Inter } from "next/font/google";
+import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
 // 1. Primary UI & Body Font (Clean, accessible, modern SaaS feel)
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 // 2. Athletic Display Font for Headings & Hero Sections
 const fontDisplay = Outfit({

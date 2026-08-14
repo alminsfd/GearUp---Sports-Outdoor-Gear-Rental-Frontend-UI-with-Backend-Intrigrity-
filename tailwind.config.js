@@ -35,7 +35,7 @@ module.exports = {
                     input: "hsl(var(--input))",
                     ring: "hsl(var(--ring))",
 
-                    // 🏆 Status Badge Token Mapping
+                    //  Status Badge Token Mapping
                     status: {
                          placed: {
                               bg: "hsl(var(--status-placed-bg))",
