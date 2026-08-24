@@ -1,11 +1,14 @@
-import React from 'react';
 
-const page = () => {
+
+export default function Home() {
   return (
-    <div>
-      <h1>Hello world </h1>
-    </div>
-  );
-};
+    <main className="min-h-screen bg-background">
 
-export default page;
+
+      {/* Hero Section */}
+      <section className="pt-36 px-6 max-w-6xl mx-auto">
+        <h1 className="text-5xl font-black">Welcome to GearUp</h1>
+      </section>
+    </main>
+  );
+}

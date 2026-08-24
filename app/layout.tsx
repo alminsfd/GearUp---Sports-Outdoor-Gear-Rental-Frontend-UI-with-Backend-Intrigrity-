@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Navbar } from "@/components/navbar/Navbar";
 
 // 1. Primary UI & Body Font (Clean, accessible, modern SaaS feel)
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -42,7 +43,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground">
-        {children}
+        <main>
+          <Navbar></Navbar>
+          {children}
+        </main>
       </body>
     </html>
   );

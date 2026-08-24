@@ -215,3 +215,33 @@
           box-shadow: 0 20px 25px -5px rgba(5, 150, 105, 0.1), 0 8px 10px -6px rgba(5, 150, 105, 0.1);
      }
 }
+
+@layer components {
+     .nav-link {
+          @apply flex items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-semibold text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+     }
+
+     .icon-button {
+          @apply flex size-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-muted hover:text-foreground;
+     }
+
+     .menu-item {
+          @apply flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-muted;
+     }
+
+     .category-icon.orange {
+          @apply bg-orange-500/10 text-orange-500;
+     }
+
+     .category-icon.blue {
+          @apply bg-blue-500/10 text-blue-500;
+     }
+
+     .category-icon.cyan {
+          @apply bg-cyan-500/10 text-cyan-500;
+     }
+
+     .category-icon.slate {
+          @apply bg-slate-500/10 text-slate-500;
+     }
+}
