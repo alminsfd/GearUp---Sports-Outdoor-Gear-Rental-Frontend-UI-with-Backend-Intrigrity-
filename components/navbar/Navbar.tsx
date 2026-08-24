@@ -14,7 +14,30 @@ const navItems = [
      { title: 'How It Works', href: '/how-it-works', icon: BookOpen },
 ]
 
-export function Navbar() {
+
+export type IUser = {
+     success: boolean
+     message: string
+     data: {
+          profile: {
+               id: string,
+               name: string,
+               email: string,
+               phone: string,
+               activeStatus: string,
+               role: "CUSTOMER" | "PROVIDER" | "ADMIN",
+               createdAt: string,
+               profileImage: string,
+               status: "ACTIVE" | "SUSPENDED",
+               updatedAt: string
+          }
+     }
+}
+type NavbarProps = {
+     user: IUser
+}
+
+export function Navbar({ user }: NavbarProps) {
      const [categoriesOpen, setCategoriesOpen] = useState(false)
      const [profileOpen, setProfileOpen] = useState(false)
      const [searchOpen, setSearchOpen] = useState(false)
@@ -66,7 +89,7 @@ export function Navbar() {
                          <button type="button" className="icon-button hidden sm:flex"><Moon className="size-4.25" /></button>
                          <div className="hidden h-5 w-px bg-border sm:block" />
                          <div className="hidden sm:block">
-                              <ProfileMenu open={profileOpen} setOpen={(v) => { setProfileOpen(v); setCategoriesOpen(false) }} />
+                              <ProfileMenu user={user} open={profileOpen} setOpen={(v) => { setProfileOpen(v); setCategoriesOpen(false) }} />
                          </div>
 
                          {/* Mobile Menu Toggle */}

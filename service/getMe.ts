@@ -16,11 +16,8 @@ export const getMe = async () => {
           }
      }
 
-     const res = await fetch(`${process.env.BACKEND_API_URL}/api/users/me`, {
+     const res = await fetch(`${process.env.BACKEND_API_URL}/api/auth/me`, {
           headers: {
-               // Authorization : accessToken as unknown as string,
-               // Authorization : `${accessToken}`,
-               // Authorization : `Bearer ${accessToken}`
 
                Cookie: `accessToken=${accessToken}`
           },

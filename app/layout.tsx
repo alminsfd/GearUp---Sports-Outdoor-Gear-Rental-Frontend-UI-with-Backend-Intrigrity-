@@ -3,6 +3,7 @@ import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Navbar } from "@/components/navbar/Navbar";
+import { getMe } from "@/service/getMe";
 
 // 1. Primary UI & Body Font (Clean, accessible, modern SaaS feel)
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -31,11 +32,13 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getMe()
   return (
     <html
       lang="en"
@@ -44,7 +47,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground">
         <main>
-          <Navbar></Navbar>
+          <Navbar user={user}></Navbar>
           {children}
         </main>
       </body>
