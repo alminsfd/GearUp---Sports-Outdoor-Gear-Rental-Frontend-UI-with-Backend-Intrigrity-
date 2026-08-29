@@ -1,25 +1,28 @@
+import jwt, { JwtPayload } from "jsonwebtoken";
 
+interface VerifyTokenResult {
+     success: boolean;
+     data?: string | JwtPayload;
+     error?: string;
+}
 
-import jwt from "jsonwebtoken";
-
-const verifyToken = (token: string, secret: string) => {
+const verifyToken = (token: string, secret: string): VerifyTokenResult => {
      try {
           const verifiedToken = jwt.verify(token, secret);
           return {
                success: true,
-               data: verifiedToken
+               data: verifiedToken,
           };
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-     } catch (error: any) {
-          console.log("Token verification failed:", error);
+     } catch (error: unknown) {
+          const errorMessage = error instanceof Error ? error.message : "Token verification failed";
+          console.log("Token verification failed:", errorMessage);
           return {
                success: false,
-               error: error.message
-          }
+               error: errorMessage,
+          };
      }
-}
-
+};
 
 export const jwtUtils = {
-     verifyToken
-}
+     verifyToken,
+};
