@@ -1,12 +1,19 @@
-import Link from 'next/link';
+import type { Metadata } from "next";
+import { Toaster } from "sonner";
 
+export const metadata: Metadata = {
+     title: "GearUp - Login",
+};
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+     children,
+}: {
+     children: React.ReactNode;
+}) {
      return (
-          <div className="min-h-screen bg-background relative flex flex-col justify-center items-center">
-
-
+          <>
                {children}
-          </div>
+               <Toaster position="top-right" richColors />
+          </>
      );
 }

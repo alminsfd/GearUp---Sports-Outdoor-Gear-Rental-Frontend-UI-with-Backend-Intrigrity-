@@ -2,22 +2,15 @@
 
 import { jwtUtils } from "@/lib/auth/jwt";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
 export type LoginState = {
-     success: boolean
-     statusCode?: number
-     message: string
-     data?: {
-          accessToken: string
-          refreshToken: string
-          user?: {
-               role: string
-          }
-     }
-} | null
+     success: boolean;
+     statusCode?: number;
+     message: string;
+     redirectTo?: string;
+} | null;
 
-export const loginAction = async (prevState: LoginState, formData: FormData) => {
+export const loginAction = async (prevState: LoginState, formData: FormData): Promise<LoginState> => {
      const email = formData.get("email");
      const password = formData.get("password");
 
@@ -47,7 +40,6 @@ export const loginAction = async (prevState: LoginState, formData: FormData) => 
                     sameSite: "lax",
                });
 
-
                const decoded = jwtUtils.verifyToken(
                     result.data.accessToken,
                     process.env.JWT_ACCESS_SECRET as string
@@ -56,22 +48,23 @@ export const loginAction = async (prevState: LoginState, formData: FormData) => 
                if (decoded?.success && decoded.data) {
                     userRole = (decoded.data as { role: string }).role;
                }
+
+
+               let targetPath = "/";
+               if (userRole === "ADMIN") targetPath = "/dashboard/admin";
+               else if (userRole === "PROVIDER") targetPath = "/dashboard/provider";
+               else if (userRole === "CUSTOMER") targetPath = "/dashboard/customer";
+
+               return {
+                    success: true,
+                    message: result.message || "Login successful!",
+                    redirectTo: targetPath,
+               };
           } else {
                return result;
           }
      } catch (error: unknown) {
           console.log("login action error because", error);
           return { success: false, message: "Something went wrong!" };
-     }
-
-     // Redirect by role instead of sending directly to /dashboard
-     if (userRole === "ADMIN") {
-          redirect("/dashboard/admin");
-     } else if (userRole === "PROVIDER") {
-          redirect("/dashboard/provider");
-     } else if (userRole === "CUSTOMER") {
-          redirect("/dashboard/customer");
-     } else {
-          redirect("/");
      }
 };

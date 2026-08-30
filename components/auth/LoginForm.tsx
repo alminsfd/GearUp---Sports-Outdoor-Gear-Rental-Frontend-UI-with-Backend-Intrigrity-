@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 'use client'
 
 import { loginAction } from "@/app/(auth)/_actions/loginactions"
@@ -5,17 +6,30 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useActionState, useEffect } from "react"
 import { toast } from "sonner"
 
 export function LoginForm() {
      const [state, action, pending] = useActionState(loginAction, null)
+     const router = useRouter()
 
      useEffect(() => {
-          if (state && !state.success) {
+          if (!state) return
+
+          if (state.success) {
+               toast.success(state.message || "Login successful!")
+               if (state.redirectTo) {
+                    setTimeout(() => {
+                         router.push(state.redirectTo!)
+                         router.refresh()
+                    }, 1000)
+               }
+          } else {
                toast.error(state.message || "Login failed")
           }
-     }, [state])
+     }, [state, router])
 
      return (
           <Card className="w-full max-w-sm">
@@ -57,6 +71,12 @@ export function LoginForm() {
                               {pending ? "Submitting..." : "Log In"}
                          </Button>
                     </CardFooter>
+                    <p className="pb-3 pt-1 text-center text-xs text-muted-foreground">
+                         Don't have an account?{' '}
+                         <Link href="/register" className="font-semibold text-primary hover:underline">
+                              Sign Up
+                         </Link>
+                    </p>
                </form>
           </Card>
      )

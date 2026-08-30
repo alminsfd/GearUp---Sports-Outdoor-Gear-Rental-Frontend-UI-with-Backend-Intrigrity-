@@ -46,7 +46,6 @@ export default async function RootLayout({
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground">
         <main>
-          {/* <Navbar user={user}></Navbar> */}
           {children}
         </main>
       </body>
