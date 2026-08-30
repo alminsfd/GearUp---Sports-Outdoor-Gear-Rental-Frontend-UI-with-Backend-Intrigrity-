@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Eye, EyeOff, Lock, Mail, User, Phone, MapPin, Image as ImageIcon, Loader2 } from 'lucide-react'
 import { RegisterState, registerUser } from '@/app/(auth)/_actions/registeractions'
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
 
 function SubmitButton() {
@@ -37,17 +38,22 @@ const initialState: RegisterState = {
 export function RegisterForm() {
      const [state, formAction] = useActionState(registerUser, initialState)
      const [showPassword, setShowPassword] = useState(false)
+     const router = useRouter()
 
 
      useEffect(() => {
+          console.log('State updated:', state)
           if (!state.message) return
-
           if (state.success) {
                toast.success(state.message)
+               setTimeout(() => {
+                    router.push('/login')
+               }, 500)
           } else {
                toast.error(state.message)
           }
-     }, [state])
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+     }, [state.success, state.message])
 
      return (
           <form action={formAction} className="space-y-3.5">

@@ -43,7 +43,12 @@ export async function registerUser(prevState: RegisterState, formData: FormData)
 
           const result = await res.json()
 
-          return result
+
+          return {
+               success: res.ok || result.statusCode === 201,
+               message: result.message || 'Registration failed',
+               data: result.data
+          }
 
 
      } catch (error: unknown) {
