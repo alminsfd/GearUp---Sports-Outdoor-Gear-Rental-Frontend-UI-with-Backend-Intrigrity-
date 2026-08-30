@@ -46,11 +46,13 @@ export const loginAction = async (prevState: LoginState, formData: FormData): Pr
           } else {
                return result
           }
-     } catch (error) {
+     } catch (error: unknown) {
+          console.log("Login Failed for ", error);
           return {
                success: false,
                message: "Somthing went wrong!",
           }
+
      }
 
      redirect("/dashboard")

@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import { jwtUtils } from "./lib/auth/jwt";
 import { getNewAccessToken } from "./service/refreshToken";
 
-const AUTH_ROUTES = ["/login", "/register"];
+const AUTH_ROUTES = ["/register", "/login"];
 const PUBLIC_ROUTES = ["/news"]; // root path (/) 
 
 export async function proxy(request: NextRequest) {
@@ -50,8 +50,8 @@ export async function proxy(request: NextRequest) {
      //  Redirect to Dashboard when Authenticated User goes to Login/Register page
      if (accessToken && AUTH_ROUTES.includes(pathname)) {
           if (userRole === "USER") return NextResponse.redirect(new URL('/dashboard', request.url));
-          if (userRole === "ADMIN") return NextResponse.redirect(new URL('/admin-dashboard', request.url));
-          if (userRole === "AUTHOR") return NextResponse.redirect(new URL('/provider-dashboard', request.url));
+          if (userRole === "ADMIN") return NextResponse.redirect(new URL('/dashboard/provider', request.url));
+          if (userRole === "PROVIDER") return NextResponse.redirect(new URL('/dashboard/customer', request.url));
           return NextResponse.redirect(new URL('/', request.url));
      }
 

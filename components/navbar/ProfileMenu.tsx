@@ -1,8 +1,11 @@
 'use client'
 
-import { BarChart3, LogOut, Settings, ShoppingBag, Store, } from 'lucide-react'
+import { BarChart3, LogIn, LogOut, Settings, ShoppingBag, Store, } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { logout } from '@/service/logout'
+import { toast } from 'sonner'
+
 
 
 
@@ -26,13 +29,34 @@ export type IUser = {
 }
 
 type ProfileMenuProps = {
-     user: IUser
+     user: IUser | null
      open: boolean
      setOpen: (v: boolean) => void
 }
 
 export function ProfileMenu({ open, setOpen, user }: ProfileMenuProps) {
      const userData = user?.data?.profile
+
+
+     if (!userData) {
+          return (
+               <Link
+                    href="/login"
+                    className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-all hover:opacity-90 active:scale-95"
+               >
+                    <LogIn className="size-4" />
+                    <span>Log In</span>
+               </Link>
+          )
+     }
+
+     const handleUserMenuAction = async (action: string) => {
+          if (action === "logout") {
+               await logout();
+               toast.success("User Logged Out Successfully!");
+          }
+     };
+
      const name = userData?.name || "User"
      const email = userData?.email || ""
      const role = userData?.role?.toLowerCase() || "customer"
@@ -142,7 +166,7 @@ export function ProfileMenu({ open, setOpen, user }: ProfileMenuProps) {
                               type="button"
                               onClick={() => {
                                    setOpen(false)
-                                   // Handle Logout logic (Token remove, cookie clear)
+                                   handleUserMenuAction("logout")
                               }}
                               className="menu-item flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
                          >

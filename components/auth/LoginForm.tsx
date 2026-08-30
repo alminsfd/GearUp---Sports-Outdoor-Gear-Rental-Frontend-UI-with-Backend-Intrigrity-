@@ -54,10 +54,7 @@ export function LoginForm() {
                     </CardContent>
                     <CardFooter className="flex-col gap-2">
                          <Button type="submit" disabled={pending} className="w-full">
-                              {pending ? "Submitting..." : "Login"}
-                         </Button>
-                         <Button type="button" variant="outline" className="w-full">
-                              Login with Google
+                              {pending ? "Submitting..." : "Log In"}
                          </Button>
                     </CardFooter>
                </form>
