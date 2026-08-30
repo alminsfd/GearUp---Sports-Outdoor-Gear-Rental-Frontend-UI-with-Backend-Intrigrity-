@@ -1,1 +1,13 @@
-export default function Component() { return <div>Work in progress...</div>; }
+
+
+const page = () => {
+     return (
+          <div>
+               <h1>
+                    Hello admin baiya
+               </h1>
+          </div>
+     );
+};
+
+export default page;

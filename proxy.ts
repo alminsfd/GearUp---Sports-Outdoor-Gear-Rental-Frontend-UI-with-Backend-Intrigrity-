@@ -49,9 +49,9 @@ export async function proxy(request: NextRequest) {
 
      //  Redirect to Dashboard when Authenticated User goes to Login/Register page
      if (accessToken && AUTH_ROUTES.includes(pathname)) {
-          if (userRole === "USER") return NextResponse.redirect(new URL('/dashboard', request.url));
-          if (userRole === "ADMIN") return NextResponse.redirect(new URL('/dashboard/provider', request.url));
-          if (userRole === "PROVIDER") return NextResponse.redirect(new URL('/dashboard/customer', request.url));
+          if (userRole === "CUSTOMER") return NextResponse.redirect(new URL('/dashboard/customer', request.url));
+          if (userRole === "ADMIN") return NextResponse.redirect(new URL('/dashboard/admin', request.url));
+          if (userRole === "PROVIDER") return NextResponse.redirect(new URL('/dashboard/provider', request.url));
           return NextResponse.redirect(new URL('/', request.url));
      }
 
@@ -67,12 +67,16 @@ export async function proxy(request: NextRequest) {
           return NextResponse.redirect(new URL('/login', request.url));
      }
 
-     // Role Based Access Control (RBAC)
-     if (pathname.startsWith("/dashboard") && userRole !== "USER") {
+     //  Role Based Access Control (RBAC) - Fixed Logic
+     if (pathname.startsWith("/dashboard/customer") && userRole !== "CUSTOMER") {
           return NextResponse.redirect(new URL('/not-found', request.url));
-     } else if (pathname.startsWith("/admin-dashboard") && userRole !== "ADMIN") {
+     }
+
+     if (pathname.startsWith("/dashboard/admin") && userRole !== "ADMIN") {
           return NextResponse.redirect(new URL('/not-found', request.url));
-     } else if (pathname.startsWith("/author-dashboard") && userRole !== "AUTHOR") {
+     }
+
+     if (pathname.startsWith("/dashboard/provider") && userRole !== "PROVIDER") {
           return NextResponse.redirect(new URL('/not-found', request.url));
      }
 
