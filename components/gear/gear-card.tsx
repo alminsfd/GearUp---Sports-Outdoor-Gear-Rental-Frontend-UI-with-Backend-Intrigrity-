@@ -15,7 +15,7 @@ export function GearCard({ gear }: { gear: IGear }) {
                {/* Image Container */}
                <div className="relative aspect-4/3 w-full overflow-hidden bg-muted">
                     <Image
-                         src={gear.imageUrl || '/placeholder-gear.jpg'}
+                         src={gear.images[0] || '/placeholder-gear.jpg'}
                          alt={gear.title}
                          fill
                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -23,7 +23,7 @@ export function GearCard({ gear }: { gear: IGear }) {
                     />
                     <div className="absolute left-3 top-3 flex gap-2">
                          <Badge className="bg-background/80 font-semibold text-foreground backdrop-blur-md">
-                              {gear.category}
+                              {gear.category.name}
                          </Badge>
                     </div>
                     <div className="absolute right-3 top-3">

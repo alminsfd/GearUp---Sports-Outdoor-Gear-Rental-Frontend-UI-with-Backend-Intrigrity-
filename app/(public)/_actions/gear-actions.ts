@@ -11,11 +11,11 @@ export async function getGears(params: GearFilterParams) {
           if (params.minPrice) queryParams.set('minPrice', params.minPrice)
           if (params.maxPrice) queryParams.set('maxPrice', params.maxPrice)
           if (params.brand) queryParams.set('brand', params.brand)
-          if (params.search) queryParams.set('search', params.search)
+          if (params.searchTerm) queryParams.set('searchTerm', params.searchTerm)
 
 
           const res = await fetch(`${process.env.BACKEND_API_URL}/api/gear?${queryParams.toString()}`, {
-               next: { revalidate: 60 },
+               cache: "no-store"
           })
 
           if (!res.ok) throw new Error('Failed to fetch gears')
@@ -28,7 +28,7 @@ export async function getGears(params: GearFilterParams) {
 
 export async function getGearById(id: string) {
      try {
-          const res = await fetch(`${process.env.BACKEND_API_URL}/api/gears/${id}`, {
+          const res = await fetch(`${process.env.BACKEND_API_URL}/api/gear/${id}`, {
                next: { revalidate: 60 },
           })
           if (!res.ok) throw new Error('Failed to fetch gear detail')
