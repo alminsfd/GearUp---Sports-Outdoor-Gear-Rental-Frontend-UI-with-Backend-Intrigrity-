@@ -9,7 +9,7 @@ import Link from 'next/link'
 
 const navItems = [
      { title: 'Home', href: '/', icon: Home },
-     { title: 'Browse Gear', href: '/browse', icon: Compass },
+     { title: 'Browse Gear', href: '/gear', icon: Compass },
      { title: 'Categories', href: '/categories', children: true },
      { title: 'How It Works', href: '/how-it-works', icon: BookOpen },
 ]
