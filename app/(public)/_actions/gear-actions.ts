@@ -13,7 +13,8 @@ export async function getGears(params: GearFilterParams) {
           if (params.brand) queryParams.set('brand', params.brand)
           if (params.search) queryParams.set('search', params.search)
 
-          const res = await fetch(`${process.env.BACKEND_API_URL}/api/gears?${queryParams.toString()}`, {
+
+          const res = await fetch(`${process.env.BACKEND_API_URL}/api/gear?${queryParams.toString()}`, {
                next: { revalidate: 60 },
           })
 

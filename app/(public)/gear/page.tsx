@@ -1,6 +1,8 @@
+import { IGear } from '@/types/gear'
 import { getGears } from '../_actions/gear-actions'
-// import { GearCard } from '@/components/gear/gear-card'
-// import { GearFilters } from '@/components/gear/gear-filters'
+import { GearFilters } from '@/components/gear/gear-filters'
+import { GearCard } from '@/components/gear/gear-card'
+
 
 export default async function GearListingPage({
      searchParams,
@@ -9,9 +11,8 @@ export default async function GearListingPage({
 }) {
      const resolvedParams = await searchParams
      const response = await getGears(resolvedParams)
-     console.log(response);
-     // const gears = response?.data || []
-     const gears = []
+     const gears = response?.data || []
+
 
      return (
           <div className="container mx-auto px-4 py-8">
@@ -25,7 +26,7 @@ export default async function GearListingPage({
                <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
                     {/* Sidebar Filters */}
                     <div className="md:col-span-1">
-                         {/* <GearFilters /> */}
+                         <GearFilters />
                     </div>
 
                     {/* Gear Grid */}
@@ -37,7 +38,7 @@ export default async function GearListingPage({
                               </div>
                          ) : (
                               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                   {gears.map((gear: any) => (
+                                   {gears.map((gear: IGear) => (
                                         <GearCard key={gear.id} gear={gear} />
                                    ))}
                               </div>
