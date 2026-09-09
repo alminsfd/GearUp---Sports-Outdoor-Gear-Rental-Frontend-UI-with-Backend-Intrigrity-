@@ -1,7 +1,7 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useState } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useRef, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -10,20 +10,34 @@ import { Search, Filter, RotateCcw } from 'lucide-react'
 export function GearFilters() {
      const router = useRouter()
      const searchParams = useSearchParams()
+     const pathname = usePathname()
      const [search, setSearch] = useState(searchParams.get('searchTerm') || '')
+     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
      const createQueryString = useCallback(
           (name: string, value: string) => {
-               const params = new URLSearchParams(searchParams.toString())
-               if (value) params.set(name, value)
-               else params.delete(name)
-               return params.toString()
+               const params = new URLSearchParams(searchParams.toString());
+               if (value) {
+                    params.set(name, value);
+               } else {
+                    params.delete(name);
+               }
+               if (name !== "page") {
+                    params.set("page", "1");
+               }
+               if (debounceTimerRef.current) {
+                    clearTimeout(debounceTimerRef.current);
+               }
+               debounceTimerRef.current = setTimeout(() => {
+                    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+               }, 500);
           },
-          [searchParams]
-     )
+          [searchParams, pathname, router]
+     );
 
      const handleSearchChange = (value: string) => {
           setSearch(value)
+
           handleFilterChange('searchTerm', value)
      }
 
@@ -36,7 +50,7 @@ export function GearFilters() {
           router.push('/gear')
      }
 
-     // searchParams.toString() কে key হিসেবে দিলে রিসেট বাটনে চাপ দেওয়া মাত্রই পুরো ফর্ম রি-রেন্ডার হয়ে ক্লিন হয়ে যাবে
+
      return (
           <div
                key={searchParams.toString() || 'filters'}

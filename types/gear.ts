@@ -4,6 +4,8 @@ export interface GearFilterParams {
      maxPrice?: string
      brand?: string
      searchTerm?: string
+     page?: string | number
+     limit?: string | number
      startDate?: string
      endDate?: string
 }
