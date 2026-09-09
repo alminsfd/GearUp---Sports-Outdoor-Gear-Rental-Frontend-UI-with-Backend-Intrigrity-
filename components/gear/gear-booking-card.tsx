@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { DateRangePicker } from '@/components/gear/date-range-picker'
 import { DateRange } from 'react-day-picker'
+import { cn } from '@/lib/utils'
 
 interface GearBookingCardProps {
      pricePerDay: number
@@ -13,6 +14,7 @@ interface GearBookingCardProps {
 }
 
 export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBookingCardProps) {
+     // eslint-disable-next-line @typescript-eslint/no-unused-vars
      const [dateRange, setDateRange] = useState<DateRange | undefined>()
 
      return (
@@ -32,10 +34,14 @@ export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBooking
                     <label className="text-xs font-bold text-foreground">Select Rental Dates</label>
                     <DateRangePicker onDateChange={setDateRange} />
                </div>
-
                <Button
+                    className={cn(
+                         "w-full rounded-xl py-6 font-bold transition-all",
+                         !isAvailable || stock === 0
+                              ? "cursor-not-allowed  opacity-60"
+                              : "cursor-pointer hover:opacity-90 active:scale-[0.98]"
+                    )}
                     disabled={!isAvailable || stock === 0}
-                    className="w-full rounded-xl py-6 font-bold"
                >
                     Rent Now
                </Button>

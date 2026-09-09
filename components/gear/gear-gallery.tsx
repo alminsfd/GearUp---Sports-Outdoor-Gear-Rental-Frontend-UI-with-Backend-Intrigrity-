@@ -10,7 +10,7 @@ export function GearGallery({ images, title }: { images: string[]; title: string
      return (
           <div className="space-y-4">
                {/* Main Large Image */}
-               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl border border-border/60 bg-muted shadow-sm">
+               <div className="relative aspect-4/3 overflow-hidden rounded-3xl border border-border/60 bg-muted shadow-sm">
                     <Image
                          src={displayImages[selectedImage]}
                          alt={title}
