@@ -1,15 +1,17 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Search, Filter, RotateCcw } from 'lucide-react'
 
+
 export function GearFilters() {
      const router = useRouter()
      const searchParams = useSearchParams()
+     const [search, setSearch] = useState(searchParams.get('searchTerm') || '')
 
      const createQueryString = useCallback(
           (name: string, value: string) => {
@@ -21,11 +23,17 @@ export function GearFilters() {
           [searchParams]
      )
 
+     const handleSearchChange = (value: string) => {
+          setSearch(value)
+          handleFilterChange('searchTerm', value)
+     }
+
      const handleFilterChange = (key: string, value: string) => {
           router.push(`?${createQueryString(key, value)}`)
      }
 
      const resetFilters = () => {
+          setSearch('')
           router.push('/gear')
      }
 
@@ -52,8 +60,8 @@ export function GearFilters() {
                          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                          <Input
                               placeholder="e.g., Hiking Tent"
-                              defaultValue={searchParams.get('search') || ''}
-                              onChange={(e) => handleFilterChange('search', e.target.value)}
+                              value={search}
+                              onChange={(e) => handleSearchChange(e.target.value)}
                               className="pl-9 text-xs rounded-xl"
                          />
                     </div>
@@ -87,6 +95,16 @@ export function GearFilters() {
                          placeholder="e.g. 100"
                          defaultValue={searchParams.get('maxPrice') || ''}
                          onChange={(e) => handleFilterChange('maxPrice', e.target.value)}
+                         className="rounded-xl text-xs"
+                    />
+               </div>
+               <div className="space-y-2">
+                    <Label className="text-xs font-semibold">Min Price ($/day)</Label>
+                    <Input
+                         type="number"
+                         placeholder="e.g. 100"
+                         defaultValue={searchParams.get('minPrice') || ''}
+                         onChange={(e) => handleFilterChange('minPrice', e.target.value)}
                          className="rounded-xl text-xs"
                     />
                </div>
