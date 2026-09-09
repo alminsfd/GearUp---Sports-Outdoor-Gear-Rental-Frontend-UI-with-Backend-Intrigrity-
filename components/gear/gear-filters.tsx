@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Search, Filter, RotateCcw } from 'lucide-react'
 
-
 export function GearFilters() {
      const router = useRouter()
      const searchParams = useSearchParams()
@@ -37,14 +36,19 @@ export function GearFilters() {
           router.push('/gear')
      }
 
+     // searchParams.toString() কে key হিসেবে দিলে রিসেট বাটনে চাপ দেওয়া মাত্রই পুরো ফর্ম রি-রেন্ডার হয়ে ক্লিন হয়ে যাবে
      return (
-          <div className="space-y-6 rounded-2xl border border-border/60 bg-card p-5 shadow-sm">
+          <div
+               key={searchParams.toString() || 'filters'}
+               className="space-y-6 rounded-2xl border border-border/60 bg-card p-5 shadow-sm"
+          >
                <div className="flex items-center justify-between border-b border-border/40 pb-3">
                     <div className="flex items-center gap-2 font-bold text-foreground">
                          <Filter className="size-4 text-primary" />
                          <span>Filters</span>
                     </div>
                     <button
+                         type="button"
                          onClick={resetFilters}
                          className="flex items-center gap-1 text-xs text-muted-foreground transition-colors hover:text-foreground"
                     >
