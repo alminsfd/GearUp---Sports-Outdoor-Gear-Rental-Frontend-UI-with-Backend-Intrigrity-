@@ -30,9 +30,9 @@ export function DateRangePicker({ onDateChange }: { onDateChange?: (range: DateR
                     <PopoverTrigger asChild>
                          <Button
                               variant="outline"
-                              className="w-full justify-start rounded-xl text-left font-normal border-border"
+                              className="w-full justify-start rounded-2xl text-left font-medium border-border/70 bg-muted/40 hover:bg-muted text-foreground transition-colors cursor-pointer"
                          >
-                              <CalendarIcon className="mr-2 size-4 text-muted-foreground" />
+                              <CalendarIcon className="mr-2 size-4 text-primary" />
                               {date?.from ? (
                                    date.to ? (
                                         <>
@@ -48,7 +48,7 @@ export function DateRangePicker({ onDateChange }: { onDateChange?: (range: DateR
                               )}
                          </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
+                    <PopoverContent className="w-auto p-0 rounded-2xl border border-border/70 bg-card shadow-xl" align="start">
                          <Calendar
                               autoFocus
                               mode="range"

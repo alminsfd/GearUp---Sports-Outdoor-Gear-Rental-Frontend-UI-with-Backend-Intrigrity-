@@ -8,6 +8,9 @@ export interface GearFilterParams {
      limit?: string | number
      startDate?: string
      endDate?: string
+     sortBy?: string
+     sortOrder?: string
+     isAvailable?: string
 }
 
 export interface Category {

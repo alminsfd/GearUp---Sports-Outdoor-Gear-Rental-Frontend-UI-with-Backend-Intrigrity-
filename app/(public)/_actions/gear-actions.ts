@@ -12,6 +12,13 @@ export async function getGears(params: GearFilterParams) {
           if (params.maxPrice) queryParams.set('maxPrice', params.maxPrice)
           if (params.brand) queryParams.set('brand', params.brand)
           if (params.searchTerm) queryParams.set('searchTerm', params.searchTerm)
+          if (params.isAvailable) queryParams.set('isAvailable', params.isAvailable)
+
+          // Sorting Parameters — backend expects sortBy (field name) + sortOrder (asc/desc)
+          if (params.sortBy) queryParams.set('sortBy', params.sortBy)
+          if (params.sortOrder) queryParams.set('sortOrder', params.sortOrder)
+
+          // Pagination
           queryParams.set('page', String(params.page || 1))
           queryParams.set('limit', String(params.limit || 15))
 
@@ -19,7 +26,14 @@ export async function getGears(params: GearFilterParams) {
                cache: "no-store"
           })
 
-          if (!res.ok) throw new Error('Failed to fetch gears')
+          if (!res.ok) {
+               console.warn(`Backend returned status ${res.status}: ${res.statusText}`)
+               return {
+                    success: false,
+                    data: [],
+                    meta: { page: 1, limit: 15, total: 0, totalPage: 1 }
+               }
+          }
           return await res.json()
      } catch (error) {
           console.error('Error fetching gears:', error)
@@ -36,7 +50,10 @@ export async function getGearById(id: string) {
           const res = await fetch(`${process.env.BACKEND_API_URL}/api/gear/${id}`, {
                next: { revalidate: 60 },
           })
-          if (!res.ok) throw new Error('Failed to fetch gear detail')
+          if (!res.ok) {
+               console.warn(`Backend returned status ${res.status} for gear details`)
+               return { success: false, data: null }
+          }
           return await res.json()
      } catch (error) {
           console.error('Error fetching gear details:', error)

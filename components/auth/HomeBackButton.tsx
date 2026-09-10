@@ -17,10 +17,10 @@ export function HomeBackButton() {
                          whileTap={{ scale: 0.95 }}
                          className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border border-border/80 bg-background/80 px-4 py-2 text-xs font-semibold text-foreground shadow-sm backdrop-blur-md transition-colors hover:border-emerald-500/50 hover:bg-card"
                     >
-                         {/* ✨ ব্যাকগ্রাউন্ড হোভার Glow Effect */}
+
                          <span className="absolute inset-0 bg-linear-to-r from-emerald-500/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
-                         {/* ⬅️ স্লাইডিং Arrow Icon */}
+
                          <motion.div
                               variants={{
                                    hover: { x: -3 },
@@ -31,7 +31,6 @@ export function HomeBackButton() {
                               <ArrowLeft className="size-4" />
                          </motion.div>
 
-                         {/* 🏠 Home Icon & Text */}
                          <div className="relative z-10 flex items-center gap-1.5">
                               <Home className="size-3.5 text-muted-foreground transition-colors group-hover:text-foreground" />
                               <span>Back to Home</span>
