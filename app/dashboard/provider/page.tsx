@@ -1,1 +1,11 @@
-export default function Component() { return <div>Work in progress...</div>; }
+import React from 'react';
+
+const page = () => {
+     return (
+          <div>
+
+          </div>
+     );
+};
+
+export default page;

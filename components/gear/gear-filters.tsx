@@ -29,6 +29,7 @@ const CATEGORY_TABS: FilterTab[] = [
      { id: 'cameras', label: 'CAMERAS', value: 'cameras' },
      { id: 'cycling', label: 'CYCLING', value: 'cycling' },
      { id: 'water-sports', label: 'WATER SPORTS', value: 'water-sports' },
+     { id: 'gyms', label: 'Gym SPORTS', value: 'gyms-sports' },
 ]
 
 const SORT_OPTIONS = [
@@ -187,11 +188,10 @@ export function GearFilters() {
                                         key={tab.id}
                                         type="button"
                                         onClick={() => handleCategoryClick(tab.value)}
-                                        className={`cursor-pointer rounded-full px-4 py-2 text-[11px] font-black tracking-wider uppercase transition-all duration-200 whitespace-nowrap ${
-                                             isActive
+                                        className={`cursor-pointer rounded-full px-4 py-2 text-[11px] font-black tracking-wider uppercase transition-all duration-200 whitespace-nowrap ${isActive
                                                   ? 'bg-primary text-primary-foreground shadow-sm shadow-primary/25'
                                                   : 'bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground'
-                                        }`}
+                                             }`}
                                    >
                                         {tab.label}
                                    </button>
@@ -207,11 +207,10 @@ export function GearFilters() {
                                    <button
                                         type="button"
                                         title="Price Filter"
-                                        className={`flex items-center justify-center rounded-xl p-2.5 text-xs font-bold transition-colors cursor-pointer ${
-                                             minPrice || maxPrice
+                                        className={`flex items-center justify-center rounded-xl p-2.5 text-xs font-bold transition-colors cursor-pointer ${minPrice || maxPrice
                                                   ? 'bg-primary/10 text-primary'
                                                   : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
-                                        }`}
+                                             }`}
                                    >
                                         <SlidersHorizontal className="size-4" />
                                    </button>
@@ -294,11 +293,10 @@ export function GearFilters() {
                                                        key={opt.label}
                                                        type="button"
                                                        onClick={() => handleSortSelect(opt.sortBy, opt.sortOrder)}
-                                                       className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold tracking-wide uppercase transition-colors cursor-pointer ${
-                                                            isSelected
+                                                       className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold tracking-wide uppercase transition-colors cursor-pointer ${isSelected
                                                                  ? 'bg-primary/10 text-primary'
                                                                  : 'text-foreground hover:bg-muted'
-                                                       }`}
+                                                            }`}
                                                   >
                                                        <span>{opt.label}</span>
                                                        {isSelected && <Check className="size-3.5 text-primary stroke-[3]" />}

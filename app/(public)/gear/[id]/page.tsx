@@ -18,14 +18,19 @@ import {
      Tag,
      Award
 } from 'lucide-react'
-import { IGearDetail } from '@/types/gear'
+import { IGearDetail, IUser } from '@/types/gear'
 import { GearBookingCard } from '@/components/gear/gear-booking-card'
 import { GearGallery } from '@/components/gear/gear-gallery'
+import { getMe } from '@/service/getMe'
 
 export default async function GearDetailsPage({ params }: { params: Promise<{ id: string }> }) {
      const { id } = await params
      const response = await getGearById(id)
+     const user: IUser = await getMe()
+     const photo = user?.data?.profile?.profileImage
      const gear: IGearDetail = response?.data
+
+
 
      if (!gear) notFound()
 
@@ -260,7 +265,12 @@ export default async function GearDetailsPage({ params }: { params: Promise<{ id
                               <div className="rounded-3xl border border-border/70 bg-card p-5 shadow-sm space-y-4">
                                    <div className="flex items-center gap-3.5">
                                         <div className="relative flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shrink-0 border border-primary/20">
-                                             <User className="size-6" />
+                                             {photo ? (
+                                                  <Image src={photo} alt={gear.title} fill className="object-cover rounded-full" />
+                                             ) : (
+                                                  <User className="size-6" />
+                                             )}
+
                                              <span className="absolute -bottom-0.5 -right-0.5 size-3 rounded-full bg-emerald-500 ring-2 ring-card" />
                                         </div>
                                         <div className="flex-1 min-w-0">

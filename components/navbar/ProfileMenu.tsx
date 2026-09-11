@@ -5,28 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { logout } from '@/service/logout'
 import { toast } from 'sonner'
+import { IUser } from '@/types/gear'
 
 
 
 
-export type IUser = {
-     success: boolean
-     message: string
-     data: {
-          profile: {
-               id: string,
-               name: string,
-               email: string,
-               phone: string,
-               activeStatus: string,
-               role: "CUSTOMER" | "PROVIDER" | "ADMIN",
-               createdAt: string,
-               profileImage: string,
-               status: "ACTIVE" | "SUSPENDED",
-               updatedAt: string
-          }
-     }
-}
+
+
 
 type ProfileMenuProps = {
      user: IUser | null

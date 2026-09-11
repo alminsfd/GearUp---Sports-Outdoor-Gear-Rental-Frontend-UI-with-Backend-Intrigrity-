@@ -8,31 +8,13 @@ import { CategoryMenu } from './CategoryMenu'
 import { ProfileMenu } from './ProfileMenu'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+import { IUser } from '@/types/gear'
 const navItems = [
      { title: 'Home', href: '/', icon: Home },
      { title: 'Browse Gear', href: '/gear', icon: Compass },
      { title: 'Categories', href: '/categories', children: true },
      { title: 'How It Works', href: '/how-it-works', icon: BookOpen },
 ]
-
-export type IUser = {
-     success: boolean
-     message: string
-     data: {
-          profile: {
-               id: string
-               name: string
-               email: string
-               phone: string
-               activeStatus: string
-               role: 'CUSTOMER' | 'PROVIDER' | 'ADMIN'
-               createdAt: string
-               profileImage: string
-               status: 'ACTIVE' | 'SUSPENDED'
-               updatedAt: string
-          }
-     }
-}
 
 type NavbarProps = {
      user: IUser
