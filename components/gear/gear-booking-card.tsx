@@ -7,6 +7,9 @@ import { DateRangePicker } from '@/components/gear/date-range-picker'
 import { DateRange } from 'react-day-picker'
 import { cn } from '@/lib/utils'
 import { ShieldCheck, Zap, Sparkles } from 'lucide-react'
+import { toast } from 'sonner'
+import { getCurrentUser } from '@/validation/auth'
+import { useRouter } from 'next/navigation'
 
 interface GearBookingCardProps {
      pricePerDay: number
@@ -16,15 +19,56 @@ interface GearBookingCardProps {
 
 export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBookingCardProps) {
      const [dateRange, setDateRange] = useState<DateRange | undefined>()
+     const [isLoading, setIsLoading] = useState(false)
+     const router = useRouter()
 
-     // Calculate total rental days
      const rentalDays =
           dateRange?.from && dateRange?.to
                ? Math.max(1, Math.ceil((dateRange.to.getTime() - dateRange.from.getTime()) / (1000 * 60 * 60 * 24)))
-               : 1
+               : 0
 
-     const subtotal = pricePerDay * rentalDays
+     const subtotal = pricePerDay * (rentalDays || 1)
      const originalPrice = Math.round(pricePerDay * 1.25)
+
+     const handleRentalRequest = async () => {
+
+          if (!dateRange?.from || !dateRange?.to) {
+               toast.error("Please select your rental start and end dates first!")
+               return
+          }
+
+          setIsLoading(true)
+
+          try {
+
+               const auth = await getCurrentUser()
+
+               if (!auth?.isAuthenticated || !auth?.user) {
+                    toast.error("You must be logged in to make a rental request!")
+                    setIsLoading(false)
+                    return
+               }
+
+               if (auth.user.role !== "CUSTOMER") {
+                    toast.error("Only customers are allowed to request rentals.")
+                    setIsLoading(false)
+                    return
+               }
+
+               toast.success("Rental request submitted successfully! Redirecting...")
+
+               const fromStr = dateRange.from.toISOString()
+               const toStr = dateRange.to.toISOString()
+
+               router.push(`/checkout?from=${fromStr}&to=${toStr}&days=${rentalDays}`)
+
+          } catch (error) {
+               console.error("Rental request error:", error)
+               toast.error("An error occurred while processing your request.")
+          } finally {
+               setIsLoading(false)
+          }
+     }
 
      return (
           <div className="rounded-3xl border border-border/70 bg-card p-6 shadow-sm space-y-6">
@@ -72,7 +116,7 @@ export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBooking
                {/* Cost Breakdown */}
                <div className="space-y-2.5 rounded-2xl bg-muted/40 p-4 text-xs">
                     <div className="flex justify-between text-muted-foreground font-medium">
-                         <span>${pricePerDay} × {rentalDays} {rentalDays === 1 ? 'day' : 'days'}</span>
+                         <span>${pricePerDay} × {rentalDays > 0 ? rentalDays : 1} {rentalDays <= 1 ? 'day' : 'days'}</span>
                          <span className="text-foreground font-bold">${subtotal}</span>
                     </div>
                     <div className="flex justify-between text-muted-foreground font-medium">
@@ -91,16 +135,18 @@ export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBooking
 
                {/* Rent Action Button */}
                <Button
+                    type="button"
+                    onClick={handleRentalRequest}
+                    disabled={!isAvailable || stock === 0 || isLoading}
                     className={cn(
                          "w-full rounded-2xl py-6 font-black text-sm uppercase tracking-wider shadow-sm transition-all flex items-center justify-center gap-2",
-                         !isAvailable || stock === 0
+                         !isAvailable || stock === 0 || isLoading
                               ? "cursor-not-allowed opacity-50"
                               : "cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 active:scale-[0.98] shadow-sm shadow-primary/25"
                     )}
-                    disabled={!isAvailable || stock === 0}
                >
                     <Zap className="size-4 fill-current" />
-                    <span>Instant Rental Request</span>
+                    <span>{isLoading ? "Processing..." : "Instant Rental Request"}</span>
                </Button>
 
                {/* Guarantee Micro-text */}

@@ -1,16 +1,27 @@
 'use server'
-
 import { jwtUtils } from "@/lib/auth/jwt";
 import { getNewAccessToken } from "@/service/refreshToken";
+import { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
+
+export interface AuthUserPayload extends JwtPayload {
+     id: string;
+     name: string;
+     email: string;
+     role: string;
+}
 
 export type AuthUserResult = {
      isAuthenticated: boolean;
+     user: AuthUserPayload | null;
      message: string;
      status: "authenticated" | "unauthenticated" | "token_refreshed";
 };
 
-export async function Validation(): Promise<AuthUserResult> {
+
+
+
+export async function getCurrentUser(): Promise<AuthUserResult> {
      const cookieStore = await cookies();
 
      let accessToken: string | undefined = cookieStore.get("accessToken")?.value;
@@ -20,6 +31,7 @@ export async function Validation(): Promise<AuthUserResult> {
      if (!accessToken && !refreshToken) {
           return {
                isAuthenticated: false,
+               user: null,
                message: "You are not logged in. Please log in to continue.",
                status: "unauthenticated",
           };
@@ -58,13 +70,14 @@ export async function Validation(): Promise<AuthUserResult> {
                     if (verified?.success) {
                          return {
                               isAuthenticated: true,
+                              user: (verified.data as AuthUserPayload) ?? null,
                               message: "Session successfully refreshed.",
                               status: "token_refreshed",
                          };
                     }
                }
           } catch (error) {
-               console.error(error);
+               console.error(error)
                cookieStore.delete("accessToken");
                cookieStore.delete("refreshToken");
           }
@@ -74,6 +87,7 @@ export async function Validation(): Promise<AuthUserResult> {
      if (decodedAccessToken?.success) {
           return {
                isAuthenticated: true,
+               user: (decodedAccessToken.data as AuthUserPayload) ?? null,
                message: "User authenticated successfully.",
                status: "authenticated",
           };
@@ -82,6 +96,7 @@ export async function Validation(): Promise<AuthUserResult> {
      // 5. Fallback for expired or invalid session
      return {
           isAuthenticated: false,
+          user: null,
           message: "Your session has expired. Please log in again.",
           status: "unauthenticated",
      };
