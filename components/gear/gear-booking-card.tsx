@@ -55,7 +55,7 @@ export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBooking
                     return
                }
 
-               toast.success("Rental request submitted successfully! Redirecting...")
+               toast.success("Rental request submitted successfully!")
 
                const fromStr = dateRange.from.toISOString()
                const toStr = dateRange.to.toISOString()

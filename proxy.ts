@@ -6,8 +6,7 @@ import { jwtUtils } from "./lib/auth/jwt";
 import { getNewAccessToken } from "./service/refreshToken";
 
 const AUTH_ROUTES = ["/register", "/login"];
-const PUBLIC_ROUTES = ["/", "/gear"]; // root path (/) 
-
+const PUBLIC_ROUTES = ["/", "/gear"];
 export async function proxy(request: NextRequest) {
      const pathname = request.nextUrl.pathname;
      const cookieStore = await cookies();
