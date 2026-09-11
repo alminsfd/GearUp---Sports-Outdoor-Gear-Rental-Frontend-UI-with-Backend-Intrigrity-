@@ -152,7 +152,7 @@ export function GearFilters() {
                {/* 1. Header / Top Navigation Filter Bar */}
                <div className="flex w-full flex-col gap-3 rounded-3xl border border-border/70 bg-card/90 backdrop-blur-md p-2.5 shadow-[0_8px_30px_-8px_rgba(16,185,129,0.06)] md:flex-row md:items-center md:justify-between md:rounded-full md:p-3">
                     {/* Search Input with Magnifying Glass Icon */}
-                    <div className="relative flex min-w-[200px] flex-1 items-center rounded-full bg-muted/60 px-4 py-2.5 transition-all focus-within:bg-card focus-within:ring-2 focus-within:ring-primary/25 hover:bg-muted md:max-w-xs">
+                    <div className="relative flex min-w-50 flex-1 items-center rounded-full bg-muted/60 px-4 py-2.5 transition-all focus-within:bg-card focus-within:ring-2 focus-within:ring-primary/25 hover:bg-muted md:max-w-xs">
                          <Search className="size-4 text-muted-foreground shrink-0" />
                          <input
                               type="text"
@@ -189,8 +189,8 @@ export function GearFilters() {
                                         type="button"
                                         onClick={() => handleCategoryClick(tab.value)}
                                         className={`cursor-pointer rounded-full px-4 py-2 text-[11px] font-black tracking-wider uppercase transition-all duration-200 whitespace-nowrap ${isActive
-                                                  ? 'bg-primary text-primary-foreground shadow-sm shadow-primary/25'
-                                                  : 'bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground'
+                                             ? 'bg-primary text-primary-foreground shadow-sm shadow-primary/25'
+                                             : 'bg-muted/70 text-muted-foreground hover:bg-muted hover:text-foreground'
                                              }`}
                                    >
                                         {tab.label}
@@ -208,8 +208,8 @@ export function GearFilters() {
                                         type="button"
                                         title="Price Filter"
                                         className={`flex items-center justify-center rounded-xl p-2.5 text-xs font-bold transition-colors cursor-pointer ${minPrice || maxPrice
-                                                  ? 'bg-primary/10 text-primary'
-                                                  : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
+                                             ? 'bg-primary/10 text-primary'
+                                             : 'bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground'
                                              }`}
                                    >
                                         <SlidersHorizontal className="size-4" />
@@ -294,12 +294,12 @@ export function GearFilters() {
                                                        type="button"
                                                        onClick={() => handleSortSelect(opt.sortBy, opt.sortOrder)}
                                                        className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold tracking-wide uppercase transition-colors cursor-pointer ${isSelected
-                                                                 ? 'bg-primary/10 text-primary'
-                                                                 : 'text-foreground hover:bg-muted'
+                                                            ? 'bg-primary/10 text-primary'
+                                                            : 'text-foreground hover:bg-muted'
                                                             }`}
                                                   >
                                                        <span>{opt.label}</span>
-                                                       {isSelected && <Check className="size-3.5 text-primary stroke-[3]" />}
+                                                       {isSelected && <Check className="size-3.5 text-primary stroke-3" />}
                                                   </button>
                                              )
                                         })}

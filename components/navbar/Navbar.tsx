@@ -8,7 +8,7 @@ import { CategoryMenu } from './CategoryMenu'
 import { ProfileMenu } from './ProfileMenu'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { IUser } from '@/types/gear'
+import { IUser } from '@/types/user'
 const navItems = [
      { title: 'Home', href: '/', icon: Home },
      { title: 'Browse Gear', href: '/gear', icon: Compass },

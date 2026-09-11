@@ -5,7 +5,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { logout } from '@/service/logout'
 import { toast } from 'sonner'
-import { IUser } from '@/types/gear'
+import { IUser } from '@/types/user'
+
 
 
 

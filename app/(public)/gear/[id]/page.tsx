@@ -18,10 +18,11 @@ import {
      Tag,
      Award
 } from 'lucide-react'
-import { IGearDetail, IUser } from '@/types/gear'
+import { IGearDetail } from '@/types/gear'
 import { GearBookingCard } from '@/components/gear/gear-booking-card'
 import { GearGallery } from '@/components/gear/gear-gallery'
 import { getMe } from '@/service/getMe'
+import { IUser } from '@/types/user'
 
 export default async function GearDetailsPage({ params }: { params: Promise<{ id: string }> }) {
      const { id } = await params
