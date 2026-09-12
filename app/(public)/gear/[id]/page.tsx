@@ -260,6 +260,7 @@ export default async function GearDetailsPage({ params }: { params: Promise<{ id
                                    pricePerDay={gear.pricePerDay}
                                    isAvailable={gear.isAvailable}
                                    stock={gear.stock}
+                                   gearItemId={id}
                               />
 
                               {/* Provider Details Card */}

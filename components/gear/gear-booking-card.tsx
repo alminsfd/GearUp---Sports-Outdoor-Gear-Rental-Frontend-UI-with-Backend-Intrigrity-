@@ -12,12 +12,13 @@ import { getCurrentUser } from '@/validation/auth'
 import { useRouter } from 'next/navigation'
 
 interface GearBookingCardProps {
+     gearItemId: string
      pricePerDay: number
      isAvailable: boolean
      stock: number
 }
 
-export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBookingCardProps) {
+export function GearBookingCard({ pricePerDay, isAvailable, stock, gearItemId }: GearBookingCardProps) {
      const [dateRange, setDateRange] = useState<DateRange | undefined>()
      const [isLoading, setIsLoading] = useState(false)
      const router = useRouter()
@@ -57,10 +58,10 @@ export function GearBookingCard({ pricePerDay, isAvailable, stock }: GearBooking
 
                toast.success("Rental request submitted successfully!")
 
-               const fromStr = dateRange.from.toISOString()
-               const toStr = dateRange.to.toISOString()
+               const startDate = dateRange.from.toISOString()
+               const endDate = dateRange.to.toISOString()
 
-               router.push(`/checkout?from=${fromStr}&to=${toStr}&days=${rentalDays}`)
+               router.push(`/checkout?gearItemId=${gearItemId}&from=${startDate}&to=${endDate}`)
 
           } catch (error) {
                console.error("Rental request error:", error)
