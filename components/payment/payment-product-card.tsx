@@ -59,6 +59,7 @@ export default function PaymentProductCard({ orderData }: PaymentProductCardProp
                          <Image
                               src={gearItem?.images[0] || '/placeholder.png'}
                               alt={gearItem?.title || 'Gear Image'}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               fill
                               className="object-cover"
                          />

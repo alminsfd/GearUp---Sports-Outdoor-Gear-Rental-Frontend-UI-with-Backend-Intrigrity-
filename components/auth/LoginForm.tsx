@@ -7,30 +7,25 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useActionState, useEffect } from "react"
 import { toast } from "sonner"
 
 export function LoginForm() {
-     const [state, action, pending] = useActionState(loginAction, null)
      const router = useRouter()
+     const searchParams = useSearchParams()
+     const redirectTo = searchParams.get("redirectTo") ?? ""
+     const [state, action, pending] = useActionState(loginAction.bind(null, redirectTo), null)
 
      useEffect(() => {
-          if (!state) return
-
-          if (state.success) {
-               toast.success(state.message || "Login successful!")
-               if (state.redirectTo) {
-                    setTimeout(() => {
-                         router.push(state.redirectTo!)
-                         router.refresh()
-                    }, 1000)
-               }
-          } else {
-               toast.error(state.message || "Login failed")
+          if (state?.success && state?.redirectTo) {
+               toast.success(state.message || 'Login successful!')
+               router.push(state.redirectTo)
+               router.refresh()
+          } else if (state?.success === false) {
+               toast.error(state.message || 'Login failed')
           }
      }, [state, router])
-
      return (
           <Card className="w-full max-w-sm">
                <form action={action}>

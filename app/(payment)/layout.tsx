@@ -16,7 +16,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
                <div className="relative z-10 flex min-h-screen flex-col">
                     <Navbar user={user} />
                     <Toaster />
-                    <main className="flex-1">{children}</main>
+                    <main className="flex-1 pt-24 sm:pt-28">{children}</main>
 
                     {/* <Footer /> */}
                </div>

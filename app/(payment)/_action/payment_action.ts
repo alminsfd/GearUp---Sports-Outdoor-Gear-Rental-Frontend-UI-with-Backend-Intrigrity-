@@ -108,3 +108,49 @@ export async function initiatePaymentAction(payload: PaymentPayload) {
           }
      }
 }
+
+
+export async function checkGearRentalStatusAction(gearItemId: string) {
+     try {
+
+          const accessToken = await isAccessTokenExist()
+
+          if (!accessToken) {
+               return {
+                    success: false,
+                    statusCode: 401,
+                    message: 'You are not authenticated. Please log in first.',
+                    data: null,
+               }
+          }
+
+          const res = await fetch(
+               `${process.env.BACKEND_API_URL}/api/rentals/check-status?gearItemId=${gearItemId}`,
+               {
+                    method: 'GET',
+                    headers: {
+                         'Content-Type': 'application/json',
+                         Cookie: `accessToken=${accessToken}`,
+                    },
+                    cache: 'no-store',
+               }
+          )
+
+          if (!res.ok) {
+               return {
+                    success: false,
+                    message: 'Failed to fetch status from server.',
+               }
+          }
+
+          return await res.json()
+
+     } catch (error: unknown) {
+          console.error('Error checking gear rental status:', error)
+          return {
+               success: false,
+               isAlreadyRented: false,
+               message: error instanceof Error ? error.message : 'Internal Server Error',
+          }
+     }
+}

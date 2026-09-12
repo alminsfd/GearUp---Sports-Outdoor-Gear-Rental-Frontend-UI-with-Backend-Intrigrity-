@@ -39,7 +39,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
 
      return (
           <Suspense fallback={<PaymentLoading />}>
-               <div className="min-h-screen bg-background py-10 px-4 sm:px-6 lg:px-8">
+               <div className="min-h-screen bg-background pb-10 px-4 sm:px-6 lg:px-8">
                     <div className="max-w-5xl mx-auto space-y-8">
 
                          {/* Header Section */}

@@ -20,12 +20,12 @@ export function GearCard({ gear }: GearCardProps) {
      const spec1 = categoryLower.includes('camp') || categoryLower.includes('tent')
           ? '⛺ 4 Person'
           : categoryLower.includes('cycl') || categoryLower.includes('bike')
-          ? '🚴 Pro Frame'
-          : categoryLower.includes('cam') || categoryLower.includes('photo')
-          ? '📷 4K Ultra'
-          : categoryLower.includes('climb')
-          ? '🧗 All-Terrain'
-          : `⛺ ${gear.brand || 'Outdoor'}`
+               ? '🚴 Pro Frame'
+               : categoryLower.includes('cam') || categoryLower.includes('photo')
+                    ? '📷 4K Ultra'
+                    : categoryLower.includes('climb')
+                         ? '🧗 All-Terrain'
+                         : `⛺ ${gear.brand || 'Outdoor'}`
 
      const spec2 = gear.stock > 0 ? '🎒 Lightweight' : '🎒 Out of Stock'
 
@@ -36,7 +36,7 @@ export function GearCard({ gear }: GearCardProps) {
                     <div className="flex items-center justify-between">
                          {gear.isAvailable ? (
                               <div className="flex items-center gap-1 rounded-full bg-red-500 px-2.5 py-0.5 text-[11px] font-black text-white shadow-sm">
-                                   <ArrowDown className="size-3 stroke-[3]" />
+                                   <ArrowDown className="size-3 stroke-3" />
                                    <span>{discountPercent}% OFF</span>
                               </div>
                          ) : (

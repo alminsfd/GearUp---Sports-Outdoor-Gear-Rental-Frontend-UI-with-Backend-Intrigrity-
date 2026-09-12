@@ -2,6 +2,7 @@
 
 import { jwtUtils } from "@/lib/auth/jwt";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export type LoginState = {
      success: boolean;
@@ -10,7 +11,7 @@ export type LoginState = {
      redirectTo?: string;
 } | null;
 
-export const loginAction = async (prevState: LoginState, formData: FormData): Promise<LoginState> => {
+export const loginAction = async (redirectTo: string, prevState: LoginState, formData: FormData): Promise<LoginState> => {
      const email = formData.get("email");
      const password = formData.get("password");
 
@@ -49,16 +50,20 @@ export const loginAction = async (prevState: LoginState, formData: FormData): Pr
                     userRole = (decoded.data as { role: string }).role;
                }
 
+               let finalRedirectUrl = "";
 
-               let targetPath = "/";
-               if (userRole === "ADMIN") targetPath = "/dashboard/admin";
-               else if (userRole === "PROVIDER") targetPath = "/dashboard/provider";
-               else if (userRole === "CUSTOMER") targetPath = "/dashboard/customer";
-
+               if (redirectTo && typeof redirectTo === "string" && redirectTo.startsWith("/") && !redirectTo.startsWith("//")) {
+                    finalRedirectUrl = redirectTo;
+               } else {
+                    if (userRole === "ADMIN") finalRedirectUrl = "/dashboard/admin";
+                    else if (userRole === "PROVIDER") finalRedirectUrl = "/dashboard/provider";
+                    else if (userRole === "CUSTOMER") finalRedirectUrl = "/dashboard/customer";
+                    else finalRedirectUrl = "/";
+               }
                return {
                     success: true,
                     message: result.message || "Login successful!",
-                    redirectTo: targetPath,
+                    redirectTo: finalRedirectUrl,
                };
           } else {
                return result;

@@ -21,15 +21,16 @@ import {
 import { IGearDetail } from '@/types/gear'
 import { GearBookingCard } from '@/components/gear/gear-booking-card'
 import { GearGallery } from '@/components/gear/gear-gallery'
-import { getMe } from '@/service/getMe'
-import { IUser } from '@/types/user'
+import { checkGearRentalStatusAction } from '@/app/(payment)/_action/payment_action'
+import { CheckRentalStatusApiResponse } from '@/types/order'
+
 
 export default async function GearDetailsPage({ params }: { params: Promise<{ id: string }> }) {
      const { id } = await params
      const response = await getGearById(id)
-     const user: IUser = await getMe()
-     const photo = user?.data?.profile?.profileImage
      const gear: IGearDetail = response?.data
+     const photo = gear.provider.profileImage
+     const rentalorderChecked: CheckRentalStatusApiResponse = await checkGearRentalStatusAction(gear?.id)
 
 
 
@@ -261,6 +262,7 @@ export default async function GearDetailsPage({ params }: { params: Promise<{ id
                                    isAvailable={gear.isAvailable}
                                    stock={gear.stock}
                                    gearItemId={id}
+                                   status={rentalorderChecked?.data?.rentalData?.status}
                               />
 
                               {/* Provider Details Card */}

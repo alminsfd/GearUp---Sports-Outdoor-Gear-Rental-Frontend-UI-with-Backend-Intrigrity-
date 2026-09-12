@@ -63,7 +63,10 @@ export async function proxy(request: NextRequest) {
 
      //  Protected route protection
      if (!accessToken && !isPublicRoute && !isAuthRoute) {
-          return NextResponse.redirect(new URL('/login', request.url));
+          const loginUrl = new URL('/login', request.url)
+          loginUrl.searchParams.set("redirectTo", pathname)
+
+          return NextResponse.redirect(loginUrl);
      }
 
      //  Role Based Access Control (RBAC) - Fixed Logic

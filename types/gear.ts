@@ -26,7 +26,7 @@ export interface Provider {
      id: string
      name: string
      email: string
-     phone?: string | null
+     profileImage: string
 }
 
 export interface Customer {

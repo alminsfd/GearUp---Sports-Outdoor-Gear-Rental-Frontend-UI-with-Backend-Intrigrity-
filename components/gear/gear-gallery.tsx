@@ -77,11 +77,10 @@ export function GearGallery({ images, title }: GearGalleryProps) {
                                         key={idx}
                                         type="button"
                                         onClick={() => setSelectedImage(idx)}
-                                        className={`group/thumb relative aspect-square size-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all cursor-pointer ${
-                                             isSelected
-                                                  ? 'border-primary ring-2 ring-primary/30 ring-offset-2 ring-offset-background'
-                                                  : 'border-border/60 opacity-60 hover:opacity-100 hover:border-border'
-                                        }`}
+                                        className={`group/thumb relative aspect-square size-20 shrink-0 overflow-hidden rounded-2xl border-2 transition-all cursor-pointer ${isSelected
+                                             ? 'border-primary ring-2 ring-primary/30 ring-offset-2 ring-offset-background'
+                                             : 'border-border/60 opacity-60 hover:opacity-100 hover:border-border'
+                                             }`}
                                    >
                                         <Image
                                              src={img}

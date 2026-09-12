@@ -81,6 +81,8 @@ export function ProfileMenu({ open, setOpen, user }: ProfileMenuProps) {
                               src={photo}
                               alt={name}
                               fill
+                              priority
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               className="object-cover"
                          />
                     ) : (
@@ -95,7 +97,7 @@ export function ProfileMenu({ open, setOpen, user }: ProfileMenuProps) {
                          <div className="flex items-center gap-3 rounded-xl bg-muted/60 p-3">
                               <div className="relative flex size-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-foreground text-xs font-bold text-background">
                                    {photo ? (
-                                        <Image src={photo} alt={name} fill className="object-cover" />
+                                        <Image src={photo} alt={name} priority sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" fill className="object-cover" />
                                    ) : (
                                         initials
                                    )}
