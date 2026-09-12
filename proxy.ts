@@ -4,6 +4,8 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 import { jwtUtils } from "./lib/auth/jwt";
 import { getNewAccessToken } from "./service/refreshToken";
+import { checkGearRentalStatusAction } from "./app/(payment)/_action/payment_action";
+import { CheckRentalStatusApiResponse } from "./types/order";
 
 const AUTH_ROUTES = ["/register", "/login"];
 const PUBLIC_ROUTES = ["/", "/gear"];
@@ -80,6 +82,23 @@ export async function proxy(request: NextRequest) {
 
      if (pathname.startsWith("/dashboard/provider") && userRole !== "PROVIDER") {
           return NextResponse.redirect(new URL('/not-found', request.url));
+     }
+
+     if (pathname === "/checkout") {
+          const gearItemId = request.nextUrl.searchParams.get("gearItemId");
+
+          if (!gearItemId) {
+               return NextResponse.redirect(new URL("/gear", request.url));
+          }
+
+          // Server Action
+          const result: CheckRentalStatusApiResponse = await checkGearRentalStatusAction(gearItemId);
+          const status = result?.data?.rentalData?.status;
+          const activeStatuses = ["PAID", "CONFIRMED", "PICKED_UP"];
+
+          if (status && activeStatuses.includes(status)) {
+               return NextResponse.redirect(new URL(`/gear/${gearItemId}`, request.url));
+          }
      }
 
      return NextResponse.next();
