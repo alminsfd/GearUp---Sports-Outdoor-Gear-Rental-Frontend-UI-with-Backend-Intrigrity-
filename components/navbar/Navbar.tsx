@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { BookOpen, Compass, Home, Menu, Moon, Search, X, ChevronRight } from 'lucide-react'
 import { Logo } from './Logo'
 import { CategoryMenu } from './CategoryMenu'
@@ -9,6 +9,7 @@ import { ProfileMenu } from './ProfileMenu'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { IUser } from '@/types/user'
+
 const navItems = [
      { title: 'Home', href: '/', icon: Home },
      { title: 'Browse Gear', href: '/gear', icon: Compass },
@@ -22,11 +23,26 @@ type NavbarProps = {
 
 export function Navbar({ user }: NavbarProps) {
      const pathname = usePathname()
+     const router = useRouter()
 
      const [categoriesOpen, setCategoriesOpen] = useState(false)
      const [profileOpen, setProfileOpen] = useState(false)
      const [searchOpen, setSearchOpen] = useState(false)
      const [mobileOpen, setMobileOpen] = useState(false)
+
+     // Search Input State
+     const [searchQuery, setSearchQuery] = useState('')
+
+     // Search Action Handler
+     const handleSearchSubmit = (e: React.FormEvent) => {
+          e.preventDefault()
+          if (!searchQuery.trim()) return
+
+          router.push(`/gear?searchTerm=${encodeURIComponent(searchQuery.trim())}`)
+          setSearchOpen(false)
+          setMobileOpen(false)
+          setSearchQuery('')
+     }
 
      return (
           <header className="fixed inset-x-0 top-0 z-40 px-4 pt-4 sm:px-6 lg:px-8">
@@ -73,24 +89,37 @@ export function Navbar({ user }: NavbarProps) {
 
                     {/* Right Actions */}
                     <div className="flex items-center gap-1.5">
-                         <div className="relative flex items-center">
+                         {/* Desktop & Tablet Search Form */}
+                         <form onSubmit={handleSearchSubmit} className="relative flex items-center">
                               <button
                                    type="button"
                                    onClick={() => setSearchOpen(!searchOpen)}
                                    className="icon-button"
+                                   aria-label="Toggle Search"
                               >
                                    <Search className="size-4.25" />
                               </button>
                               {searchOpen && (
-                                   <input
-                                        autoFocus
-                                        placeholder="Search gear..."
-                                        className="ml-2 rounded-xl border border-border bg-muted px-3 py-1.5 text-xs focus:outline-none"
-                                   />
+                                   <div className="ml-2 flex items-center gap-1">
+                                        <input
+                                             autoFocus
+                                             type="text"
+                                             value={searchQuery}
+                                             onChange={(e) => setSearchQuery(e.target.value)}
+                                             placeholder="Search gear..."
+                                             className="w-36 rounded-xl border border-border bg-muted px-3 py-1.5 text-xs focus:outline-none focus:ring-1 focus:ring-primary sm:w-48 transition-all"
+                                        />
+                                        <button
+                                             type="submit"
+                                             className="rounded-xl bg-primary px-2.5 py-1.5 text-xs font-bold text-primary-foreground hover:bg-primary/90 transition-all"
+                                        >
+                                             Search
+                                        </button>
+                                   </div>
                               )}
-                         </div>
+                         </form>
 
-                         <button type="button" className="icon-button hidden sm:flex">
+                         <button type="button" className="icon-button hidden sm:flex" aria-label="Toggle Theme">
                               <Moon className="size-4.25" />
                          </button>
                          <div className="hidden h-5 w-px bg-border sm:block" />
@@ -110,6 +139,7 @@ export function Navbar({ user }: NavbarProps) {
                               type="button"
                               onClick={() => setMobileOpen(!mobileOpen)}
                               className="icon-button lg:hidden"
+                              aria-label="Toggle Navigation"
                          >
                               {mobileOpen ? <X className="size-4.5" /> : <Menu className="size-4.5" />}
                          </button>
@@ -118,7 +148,27 @@ export function Navbar({ user }: NavbarProps) {
 
                {/* Mobile Drawer */}
                {mobileOpen && (
-                    <div className="mx-auto mt-2 max-w-6xl rounded-2xl border border-border/70 bg-card p-3 shadow-xl lg:hidden">
+                    <div className="mx-auto mt-2 max-w-6xl space-y-3 rounded-2xl border border-border/70 bg-card p-3 shadow-xl lg:hidden">
+                         {/* Mobile Search Bar */}
+                         <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
+                              <div className="relative flex-1">
+                                   <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                                   <input
+                                        type="text"
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        placeholder="Search gear..."
+                                        className="w-full rounded-xl border border-border bg-muted pl-9 pr-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-primary"
+                                   />
+                              </div>
+                              <button
+                                   type="submit"
+                                   className="rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
+                              >
+                                   Search
+                              </button>
+                         </form>
+
                          <div className="flex flex-col gap-1">
                               {navItems.map((item) => {
                                    const isActive =

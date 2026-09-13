@@ -43,7 +43,7 @@ export default async function GearDetailsPage({ params }: { params: Promise<{ id
           : '4.8'
 
      return (
-          <div className="min-h-screen pt-24 sm:pt-28 pb-20">
+          <div className="min-h-screen pb-20">
                <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
                     {/* Top Breadcrumb & Navigation Bar */}
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-b border-border/40 pb-4">

@@ -5,6 +5,7 @@ import { getCatagoryById } from '../../_actions/catagory-action';
 import { ICategoryDetailResponse } from '@/types/catagory';
 import { IGear } from '@/types/gear';
 
+
 interface CategoryPageProps {
      params: Promise<{ id: string }>;
 }
@@ -24,6 +25,8 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
 
      const gearsList = category.gears || [];
      const totalItems = gearsList.length;
+
+
 
      return (
           <div className="min-h-screen py-8">

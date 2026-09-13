@@ -4,8 +4,10 @@ import CategoryListClient from '@/components/catagory/category-list-client';
 
 
 
+
 export default async function CategoryPage() {
      const response: ICategoryListResponse = await getCatagoryall();
+
 
 
 

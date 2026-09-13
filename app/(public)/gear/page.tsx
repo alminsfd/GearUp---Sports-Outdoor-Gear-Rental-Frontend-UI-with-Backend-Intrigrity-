@@ -3,7 +3,8 @@ import { getGears } from '../_actions/gear-actions'
 import { GearFilters } from '@/components/gear/gear-filters'
 import { GearCard } from '@/components/gear/gear-card'
 import { GearPagination } from '@/components/gear/gear-pagination'
-import { PackageOpen } from 'lucide-react'
+import { PackageOpen, X } from 'lucide-react'
+import Link from 'next/link'
 
 export default async function GearListingPage({
      searchParams,
@@ -13,6 +14,7 @@ export default async function GearListingPage({
      const resolvedParams = await searchParams
 
      const currentPage = Number(resolvedParams.page) || 1
+     const searchQuery = resolvedParams.search
 
      const response = await getGears(resolvedParams)
      const gears: IGear[] = response?.data || []
@@ -20,16 +22,26 @@ export default async function GearListingPage({
      const totalItems = response?.meta?.total ?? gears.length
 
      return (
-          <div className="min-h-screen pt-24 sm:pt-28 pb-16">
-               <div className="container mx-auto max-w-7xl px-4 sm:px-6 space-y-6">
+          <div className="min-h-screen pb-16">
+               <div className="container mx-auto max-w-7xl space-y-6 px-4 sm:px-6">
                     {/* 1. Header / Top Navigation Filter Bar */}
                     <GearFilters />
 
-                    {/* 2. Results Meta Bar */}
-                    <div className="flex items-center justify-between px-1">
+                    {/* 2. Results Meta Bar & Active Search Indicator */}
+                    <div className="flex flex-wrap items-center justify-between gap-2 px-1">
                          <span className="text-xs font-bold tracking-wider text-muted-foreground uppercase">
                               RESULTS: {totalItems} ITEMS
                          </span>
+
+                         {searchQuery && (
+                              <div className="flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                                   {/*  eslint-disable-next-line react/no-unescaped-entities */}
+                                   <span>Search: "{searchQuery}"</span>
+                                   <Link href="/gear" className="hover:opacity-75">
+                                        <X className="size-3.5" />
+                                   </Link>
+                              </div>
+                         )}
                     </div>
 
                     {/* 3. Product Grid Layout & Pagination */}
@@ -40,8 +52,18 @@ export default async function GearListingPage({
                               </div>
                               <p className="text-lg font-bold text-foreground">No gear found</p>
                               <p className="mt-1 max-w-sm text-xs text-muted-foreground">
-                                   Try adjusting your filters, selecting another category, or searching with different terms.
+                                   {searchQuery
+                                        ? `No items found matching "${searchQuery}". Try searching for something else.`
+                                        : 'Try adjusting your filters, selecting another category, or searching with different terms.'}
                               </p>
+                              {searchQuery && (
+                                   <Link
+                                        href="/gear"
+                                        className="mt-4 rounded-xl bg-primary px-4 py-2 text-xs font-bold text-primary-foreground hover:bg-primary/90"
+                                   >
+                                        Clear Search
+                                   </Link>
+                              )}
                          </div>
                     ) : (
                          <div className="space-y-6">
