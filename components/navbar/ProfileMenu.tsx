@@ -7,13 +7,6 @@ import { logout } from '@/service/logout'
 import { toast } from 'sonner'
 import { IUser } from '@/types/user'
 
-
-
-
-
-
-
-
 type ProfileMenuProps = {
      user: IUser | null
      open: boolean
@@ -22,8 +15,6 @@ type ProfileMenuProps = {
 
 export function ProfileMenu({ open, setOpen, user }: ProfileMenuProps) {
      const userData = user?.data?.profile
-
-
      if (!userData) {
           return (
                <Link

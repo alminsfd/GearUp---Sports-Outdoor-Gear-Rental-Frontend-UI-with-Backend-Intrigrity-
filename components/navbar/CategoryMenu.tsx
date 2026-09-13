@@ -36,7 +36,7 @@ export function CategoryMenu({ open, setOpen }: { open: boolean; setOpen: (value
                               {categories.map((category) => {
                                    const Icon = category.icon
                                    return (
-                                        <Link key={category.title} href="/browse" onClick={() => setOpen(false)} className="group rounded-2xl border border-border/60 bg-muted/35 p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/5">
+                                        <Link key={category.title} href="/catagory" onClick={() => setOpen(false)} className="group rounded-2xl border border-border/60 bg-muted/35 p-4 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-primary/5">
                                              <div className={`p-2 rounded-lg w-fit ${category.accent}`}><Icon className="size-5" /></div>
                                              <div className="mt-4 flex items-start justify-between gap-2">
                                                   <div><h3 className="text-sm font-bold text-foreground">{category.title}</h3><p className="mt-1 text-xs text-muted-foreground">{category.description}</p></div>
@@ -57,3 +57,4 @@ export function CategoryMenu({ open, setOpen }: { open: boolean; setOpen: (value
           </div>
      )
 }
+
