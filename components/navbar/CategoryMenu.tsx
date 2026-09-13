@@ -28,7 +28,7 @@ export function CategoryMenu({ open, setOpen }: { open: boolean; setOpen: (value
                                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Explore the collection</p>
                                    <h2 className="mt-1 text-xl font-bold text-foreground">Find your next adventure</h2>
                               </div>
-                              <Link href="/categories" onClick={() => setOpen(false)} className="group flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary">
+                              <Link href="/catagory" onClick={() => setOpen(false)} className="group flex items-center gap-1 text-xs font-semibold text-muted-foreground hover:text-primary">
                                    View all <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                               </Link>
                          </div>
@@ -50,7 +50,7 @@ export function CategoryMenu({ open, setOpen }: { open: boolean; setOpen: (value
                          <div className="mt-2 flex items-center gap-2 rounded-xl bg-primary/10 px-4 py-3 text-xs text-foreground">
                               <Sparkles className="size-4 text-primary" />
                               <span>Not sure where to start?</span>
-                              <Link href="#how-it-works" onClick={() => setOpen(false)} className="ml-auto font-bold text-primary hover:underline">Take the gear quiz</Link>
+                              <Link href="/gear" onClick={() => setOpen(false)} className="ml-auto font-bold text-primary hover:underline">Take the gear</Link>
                          </div>
                     </div>
                )}

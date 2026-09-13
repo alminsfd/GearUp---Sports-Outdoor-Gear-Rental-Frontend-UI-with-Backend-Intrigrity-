@@ -12,7 +12,7 @@ import { IUser } from '@/types/user'
 const navItems = [
      { title: 'Home', href: '/', icon: Home },
      { title: 'Browse Gear', href: '/gear', icon: Compass },
-     { title: 'Categories', href: '/categories', children: true },
+     { title: 'Catagory', href: '/catagory', children: true },
      { title: 'How It Works', href: '/how-it-works', icon: BookOpen },
 ]
 
@@ -132,7 +132,7 @@ export function Navbar({ user }: NavbarProps) {
                                              className={cn(
                                                   'flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition-all',
                                                   isActive
-                                                       ? 'bg-primary/10 text-primary font-bold' // 🔥 Mobile Active State
+                                                       ? 'bg-primary/10 text-primary font-bold'
                                                        : 'text-foreground hover:bg-muted'
                                              )}
                                         >
