@@ -24,7 +24,7 @@ export function CopyIdButton({ id }: CopyIdButtonProps) {
                className="flex items-center gap-1 font-mono text-[11px] font-bold text-primary transition-all hover:underline"
                title="Click to copy ID"
           >
-               <span className="max-w-[120px] truncate">{id}</span>
+               <span className="max-w-30 truncate">{id}</span>
                <ExternalLink className="size-3 shrink-0" />
           </button>
      )

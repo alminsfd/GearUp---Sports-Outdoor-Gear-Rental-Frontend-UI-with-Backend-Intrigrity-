@@ -11,7 +11,8 @@ import {
 } from 'lucide-react'
 import { getMe } from '@/service/getMe'
 import { IUser } from '@/types/user'
-import { CopyIdButton, ProfileOverview } from '@/components/dashboard/profileOverviwe.tsx'
+import { CopyIdButton } from '@/components/dashboard/CopyIdButton'
+
 
 
 export default async function ProfilePage() {
@@ -61,9 +62,6 @@ export default async function ProfilePage() {
                                         </p>
                                    </div>
                               </div>
-
-                              {/* Interaction Part Component */}
-                              <ProfileOverview profile={profile} />
                          </div>
                     </div>
                </div>
