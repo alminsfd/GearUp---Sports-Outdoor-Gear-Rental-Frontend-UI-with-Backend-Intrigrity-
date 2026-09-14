@@ -1,3 +1,4 @@
+import { AmbientGlow } from "@/components/common/ambient-glow";
 import { Navbar } from "@/components/navbar/Navbar";
 import { getMe } from "@/service/getMe";
 import { Toaster } from "sonner";
@@ -8,6 +9,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
 
      return (
           <>
+               <AmbientGlow></AmbientGlow>
                <Navbar user={user} />
                <main>{children}</main>
                <Toaster position="top-right" richColors />

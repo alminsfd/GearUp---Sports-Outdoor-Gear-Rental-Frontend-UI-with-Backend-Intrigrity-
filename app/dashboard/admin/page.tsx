@@ -1,13 +1,17 @@
+import AdminOverviewClient from "@/components/dashboard/admin/AdminOverviewClient"
+import { getMe } from "@/service/getMe"
+import { IUser } from "@/types/user"
 
 
-const page = () => {
-     return (
-          <div>
-               <h1>
-                    Hello admin baiya
-               </h1>
-          </div>
-     );
-};
+export default async function AdminDashboardPage() {
+     const user: IUser = await getMe()
 
-export default page;
+     // Server Side Data Fetching required for Admin Stats
+     const stats = {
+          totalUsers: 1420,
+          activeGear: 380,
+          totalRentals: 950,
+     }
+
+     return <AdminOverviewClient stats={stats} />
+}

@@ -53,7 +53,7 @@ export default async function PaymentSuccessPage({ searchParams }: SuccessPagePr
                               asChild
                               className="w-full rounded-2xl py-6 font-bold text-xs uppercase tracking-wider bg-foreground text-background hover:bg-foreground/90 transition-all shadow-md active:scale-[0.99]"
                          >
-                              <Link href="/dashboard/orders" className="flex items-center justify-center gap-2">
+                              <Link href="/dashboard/customer/orders" className="flex items-center justify-center gap-2">
                                    <ShoppingBag className="size-4" />
                                    View Your Orders
                               </Link>
