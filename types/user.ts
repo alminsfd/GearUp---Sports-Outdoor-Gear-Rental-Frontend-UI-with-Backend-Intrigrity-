@@ -7,7 +7,7 @@ export type IUser = {
                name: string,
                email: string,
                phone: string,
-               activeStatus: string,
+               address: string,
                role: "CUSTOMER" | "PROVIDER" | "ADMIN",
                createdAt: string,
                profileImage: string,
@@ -15,4 +15,25 @@ export type IUser = {
                updatedAt: string
           }
      }
+}
+
+export interface IUserProfile {
+     id: string
+     email: string
+     name: string
+     phone: string
+     address: string
+     role: 'CUSTOMER' | 'PROVIDER' | 'ADMIN'
+     status: 'ACTIVE' | 'SUSPENDED' | 'INACTIVE'
+     profileImage: string
+     createdAt: string
+     updatedAt: string
+}
+
+export interface IUPdateUser {
+     name?: string
+     phone?: string
+     address?: string
+     profileImage?: string
+
 }

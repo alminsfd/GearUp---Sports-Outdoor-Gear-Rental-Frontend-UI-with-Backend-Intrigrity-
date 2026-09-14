@@ -38,7 +38,7 @@ const navConfig: Record<string, Array<{ title: string; href: string; icon: any }
      CUSTOMER: [
           { title: 'Customer Dashboard', href: '/dashboard/customer', icon: LayoutDashboard },
           { title: 'My Rental Orders', href: '/dashboard/customer/orders', icon: ShoppingBag },
-          { title: 'Explore Gear', href: '/gears', icon: Compass },
+          { title: 'Explore Gear', href: '/gear', icon: Compass },
           { title: 'Profile', href: '/dashboard/profile', icon: User },
      ],
 }

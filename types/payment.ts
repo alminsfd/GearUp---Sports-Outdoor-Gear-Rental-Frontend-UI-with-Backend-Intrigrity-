@@ -1,3 +1,5 @@
+import { IGear } from "./gear"
+
 export interface PaymentButtonProps {
      rentalOrderId: string
      totalAmount?: number
@@ -14,4 +16,18 @@ export interface PaymentButtonProps {
 
 export interface PaymentPayload {
      rentalOrderId: string
+}
+
+export interface IPayment {
+     id: string;
+     startDate: string;
+     endDate: string;
+     totalDays: number;
+     totalAmount: number;
+     status: "PAID" | "PLACED" | "CANCELLED" | "COMPLETED";
+     createdAt: string;
+     updatedAt: string;
+     customerId: string;
+     gearItemId: string;
+     gearItem: IGear;
 }
