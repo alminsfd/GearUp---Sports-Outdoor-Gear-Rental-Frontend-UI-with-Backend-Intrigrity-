@@ -32,7 +32,7 @@ const navConfig: Record<string, Array<{ title: string; href: string; icon: any }
           { title: 'Provider Overview', href: '/dashboard/provider', icon: LayoutDashboard },
           { title: 'My Inventory', href: '/dashboard/provider/gear', icon: Package },
           { title: 'Add New Gear', href: '/dashboard/provider/gear/new', icon: PlusCircle },
-          { title: 'Incoming Orders', href: '/dashboard/provider/orders', icon: ShoppingBag },
+          { title: 'Incoming Orders', href: '/dashboard/provider/order', icon: ShoppingBag },
           { title: 'Profile', href: '/dashboard/profile', icon: User },
      ],
      CUSTOMER: [

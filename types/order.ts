@@ -95,4 +95,8 @@ export interface GearItemCencel {
      status: "CANCELLED"
 
 }
+export interface OrderStatusChange {
 
+     status: "PLACED" | "CONFIRMED" | "PAID" | "PICKED_UP" | "RETURNED" | "CANCELLED"
+
+}
