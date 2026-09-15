@@ -67,3 +67,15 @@ export interface IGear {
 export interface IGearDetail extends IGear {
      reviews: Review[]
 }
+
+export interface IBike {
+     title: string;
+     description: string;
+     pricePerDay: number;
+     brand: string;
+     categoryId: string;
+     stock: number;
+}
+export interface IsAvailable {
+     isAvailable: boolean
+}
