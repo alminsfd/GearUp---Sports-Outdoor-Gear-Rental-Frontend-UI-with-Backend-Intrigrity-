@@ -18,7 +18,7 @@ export default async function DashboardLayout({
 
      return <>
           <AmbientGlow />
-          <Toaster></Toaster>
+          <Toaster position="top-right" richColors />
           <DashboardShell user={userResponse}>{children}</DashboardShell>
      </>
 }

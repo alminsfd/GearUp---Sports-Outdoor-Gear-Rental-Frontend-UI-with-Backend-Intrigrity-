@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Star, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { postReviews } from '../_action/customar_action'
+import { postReviews } from '../../../app/dashboard/_action/customar_action'
 import { toast } from 'sonner'
 
 interface ReviewModalProps {

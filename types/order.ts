@@ -90,3 +90,9 @@ export interface GearItemReview {
      rating: number;
      comment: string;
 }
+export interface GearItemCencel {
+
+     status: "CANCELLED"
+
+}
+

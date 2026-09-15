@@ -176,7 +176,7 @@ export default function CustomerOverviewClient({
                                                                  </button>
                                                             )}
                                                             <Link
-                                                                 href={`/dashboard/customer/orders/${order.id}`}
+                                                                 href={`/dashboard/customer/orders`}
                                                                  className="inline-flex items-center gap-1 rounded-xl bg-muted px-3 py-1.5 text-xs font-semibold hover:bg-muted/80 transition-colors"
                                                             >
                                                                  <span>Details</span>

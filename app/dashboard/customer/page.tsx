@@ -1,5 +1,5 @@
 import { getMe } from "@/service/getMe"
-import { getPaymentHistory, getRentalOrders } from "@/components/dashboard/_action/customar_action"
+import { getPaymentHistory, getRentalOrders } from "@/app/dashboard/_action/customar_action"
 import CustomerOverviewClient from "@/components/dashboard/customer/CustomerOverviewClient"
 import { Payment, RentalOrder } from "@/types/order"
 
