@@ -1,7 +1,8 @@
 "use server";
 
-// স্পেলিং চেক করুন: validation/session (বা আপনার ফোল্ডার স্ট্রাকচার অনুযায়ী)
+import { GearItemReview } from "@/types/order";
 import { isAccessTokenExist } from "@/validation/sesstion";
+
 
 export async function getRentalOrders() {
      try {
@@ -92,4 +93,51 @@ export async function getPaymentHistory() {
                data: null,
           };
      }
+}
+
+export async function postReviews(payload: GearItemReview) {
+     try {
+
+          const accessToken = await isAccessTokenExist();
+
+          if (!accessToken) {
+               return {
+                    success: false,
+                    statusCode: 401,
+                    message: 'You are not authenticated. Please log in first.',
+                    data: null,
+               };
+          }
+
+          const res = await fetch(`${process.env.BACKEND_API_URL}/api/reviews`, {
+               method: 'POST',
+               headers: {
+                    'Content-Type': 'application/json',
+                    Cookie: `accessToken=${accessToken}`,
+               },
+               body: JSON.stringify(payload),
+               cache: "no-store",
+          });
+          const result = await res.json();
+
+          if (!res.ok || !result.success) {
+               return {
+                    success: false,
+                    statusCode: res.status,
+                    message: result.message || 'Failed to get payment history',
+                    data: null,
+               };
+          }
+
+          return result
+     } catch (error: unknown) {
+          console.error('Error fetching Order history:', error);
+          return {
+               success: false,
+               statusCode: 500,
+               message: error instanceof Error ? error.message : 'Failed to get payment history',
+               data: null,
+          };
+     }
+
 }

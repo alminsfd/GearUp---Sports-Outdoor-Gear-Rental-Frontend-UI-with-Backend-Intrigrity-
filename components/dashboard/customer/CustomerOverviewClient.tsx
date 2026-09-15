@@ -25,6 +25,7 @@ interface CustomerOverviewClientProps {
      }
      orders: RentalOrder[]
      payments: Payment[]
+
 }
 
 export default function CustomerOverviewClient({
@@ -33,7 +34,7 @@ export default function CustomerOverviewClient({
      orders = [],
      payments = [],
 }: CustomerOverviewClientProps) {
-     const [selectedGearForReview, setSelectedGearForReview] = useState<string | null>(null)
+     const [selectedGearForReview, setSelectedGearForReview] = useState<{ id: string; title: string } | null>(null)
 
      const getStatusBadge = (status: string) => {
           const statusKey = status?.toLowerCase()
@@ -161,7 +162,13 @@ export default function CustomerOverviewClient({
                                                        <div className="flex items-center justify-end gap-2">
                                                             {order.status === 'RETURNED' && (
                                                                  <button
-                                                                      onClick={() => setSelectedGearForReview(order.gearItem?.title as string)}
+                                                                      onClick={() =>
+                                                                           setSelectedGearForReview({
+                                                                                id: order?.gearItemId,
+                                                                                title: order.gearItem?.title as string
+                                                                           })
+
+                                                                      }
                                                                       className="inline-flex items-center gap-1 rounded-xl bg-secondary/10 px-3 py-1.5 text-xs font-bold text-secondary hover:bg-secondary hover:text-white transition-colors"
                                                                  >
                                                                       <Star className="size-3.5" />
@@ -236,12 +243,15 @@ export default function CustomerOverviewClient({
                </div>
 
                {/* Dynamic Review Modal */}
-               {selectedGearForReview && (
-                    <ReviewModal
-                         gearTitle={selectedGearForReview}
-                         onClose={() => setSelectedGearForReview(null)}
-                    />
-               )}
-          </div>
+               {
+                    selectedGearForReview && (
+                         <ReviewModal
+                              gearTitle={selectedGearForReview.title}
+                              gearItemId={selectedGearForReview.id}
+                              onClose={() => setSelectedGearForReview(null)}
+                         />
+                    )
+               }
+          </div >
      )
 }

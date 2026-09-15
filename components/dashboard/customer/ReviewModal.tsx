@@ -3,23 +3,37 @@
 import { useState } from 'react'
 import { Star, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { postReviews } from '../_action/customar_action'
+import { toast } from 'sonner'
 
 interface ReviewModalProps {
+     gearItemId: string
      gearTitle: string
      onClose: () => void
 }
 
-export default function ReviewModal({ gearTitle, onClose }: ReviewModalProps) {
+export default function ReviewModal({ gearTitle, gearItemId, onClose }: ReviewModalProps) {
      const [rating, setRating] = useState(5)
      const [reviewComment, setReviewComment] = useState('')
-
-     const handleReviewSubmit = (e: React.FormEvent) => {
+     const handleReviewSubmit = async (e: React.FormEvent) => {
           e.preventDefault()
-          alert(`Review submitted for ${gearTitle}! Rating: ${rating} Stars`)
-          setReviewComment('')
-          onClose()
-     }
 
+
+          const result = await postReviews({
+               gearItemId,
+               rating,
+               comment: reviewComment,
+          })
+
+          if (result?.success) {
+               setReviewComment('')
+               onClose()
+               toast.success("review submitted successfully")
+          } else {
+               // Show error toast/alert if needed
+               console.error(result?.message)
+          }
+     }
      return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
                <div className="glass-panel w-full max-w-md rounded-3xl border bg-card p-6 shadow-2xl relative space-y-4">

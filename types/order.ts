@@ -85,3 +85,8 @@ export interface CustomerOverviewClientProps {
      payments: Payment[];
 }
 
+export interface GearItemReview {
+     gearItemId: string;
+     rating: number;
+     comment: string;
+}
