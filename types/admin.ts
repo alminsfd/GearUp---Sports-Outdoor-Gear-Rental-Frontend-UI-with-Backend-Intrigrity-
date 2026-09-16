@@ -135,3 +135,18 @@ export interface RentalOrder {
      };
      payment: Payment | null;
 }
+
+
+export interface UpdateUserStatusResponse {
+     success: boolean;
+     statusCode?: number;
+     message: string;
+     data?: {
+          id: string;
+          name: string;
+          email: string;
+          role: string;
+          status: UserStatus;
+          updatedAt: string;
+     } | null;
+}

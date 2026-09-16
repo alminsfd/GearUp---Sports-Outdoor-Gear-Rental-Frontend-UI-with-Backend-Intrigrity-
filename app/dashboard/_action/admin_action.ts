@@ -1,7 +1,8 @@
 'use server'
 
-import { ApiResponse, GearItem, GetUsersQuery, IGetUsersResponse, IUser, RentalOrder } from "@/types/admin";
+import { ApiResponse, GearItem, GetUsersQuery, IGetUsersResponse, IUser, RentalOrder, UpdateUserStatusResponse, UserStatus } from "@/types/admin";
 import { isAccessTokenExist } from "@/validation/sesstion";
+import { revalidateTag } from "next/cache";
 
 
 
@@ -205,6 +206,70 @@ export async function getAllAdminRentals(queryParams?: { page?: number; limit?: 
                message: 'Something went wrong while fetching rental orders.',
                data: [],
                meta: undefined
+          };
+     }
+}
+
+
+
+// User Status Type Definition
+
+
+
+export async function updateUserStatus(
+     userId: string,
+     status: UserStatus
+): Promise<UpdateUserStatusResponse> {
+     try {
+          const accessToken = await isAccessTokenExist();
+
+          if (!accessToken) {
+               return {
+                    success: false,
+                    statusCode: 401,
+                    message: 'You are not authenticated. Please log in first.',
+                    data: null,
+               };
+          }
+
+          const endpoint = `${process.env.BACKEND_API_URL}/api/admin/users/${userId}`;
+
+          const res = await fetch(endpoint, {
+               method: 'PATCH',
+               headers: {
+                    'Content-Type': 'application/json',
+                    Cookie: `accessToken=${accessToken}`,
+               },
+               body: JSON.stringify({ status }),
+          });
+
+          const result: UpdateUserStatusResponse = await res.json();
+
+          if (!res.ok) {
+               return {
+                    success: false,
+                    statusCode: res.status,
+                    message: result.message || 'Failed to update user status.',
+                    data: null,
+               };
+          }
+
+
+          revalidateTag('admin-users', { expire: 0 });
+
+          return {
+               success: result.success,
+               statusCode: result.statusCode || res.status,
+               message: result.message,
+               data: result.data,
+          };
+     } catch (error: unknown) {
+          console.error('Error updating user status:', error);
+          return {
+               success: false,
+               statusCode: 500,
+               message: error instanceof Error ? error.message : 'Internal server error',
+               data: null,
           };
      }
 }
