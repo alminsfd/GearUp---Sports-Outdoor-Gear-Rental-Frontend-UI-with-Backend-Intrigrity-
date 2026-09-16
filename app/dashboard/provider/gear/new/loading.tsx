@@ -26,7 +26,7 @@ export default function Loading() {
 
                     {/* Skeleton Progress Indicator */}
                     <div className="mt-6 w-full bg-muted/50 rounded-full h-1.5 overflow-hidden">
-                         <div className="bg-gradient-to-r from-primary to-secondary h-full w-2/3 animate-pulse rounded-full" />
+                         <div className=" bg-linear-to-r from-primary to-secondary h-full w-2/3 animate-pulse rounded-full" />
                     </div>
 
                     {/* Footer Badge */}

@@ -1,17 +1,54 @@
-import AdminOverviewClient from "@/components/dashboard/admin/AdminOverviewClient"
-import { getMe } from "@/service/getMe"
-import { IUser } from "@/types/user"
 
 
-export default async function AdminDashboardPage() {
-     const user: IUser = await getMe()
+import { Shield, } from 'lucide-react';
+import { getAllAdminGears, getAllAdminRentals, getALLUsers } from '../_action/admin_action';
+import AdminOverview from '@/components/dashboard/admin/AdminOverviewClient';
 
-     // Server Side Data Fetching required for Admin Stats
-     const stats = {
-          totalUsers: 1420,
-          activeGear: 380,
-          totalRentals: 950,
-     }
 
-     return <AdminOverviewClient stats={stats} />
+export default async function AdminOverviewPage() {
+     const [usersRes, gearsRes, rentalsRes] = await Promise.all([
+          getALLUsers(),
+          getAllAdminGears(),
+          getAllAdminRentals(),
+     ]);
+
+
+     const totalUsers = usersRes?.meta?.total ?? usersRes?.data?.length ?? 0;
+     const activeGears = gearsRes?.meta?.total ?? gearsRes?.data?.length ?? 0;
+     const totalRentals = rentalsRes?.meta?.total ?? rentalsRes?.data?.length ?? 0;
+
+
+     const totalRevenue = rentalsRes?.data?.reduce((acc, order) => {
+          return acc + (order.totalAmount || 0);
+     }, 0) ?? 0;
+
+     const platformMetrics = {
+          totalUsers,
+          activeGears,
+          totalRentals,
+          totalRevenue,
+     };
+
+     return (
+          <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 space-y-8">
+               {/* Header Banner */}
+               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                         <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3.5 py-1 text-xs font-semibold text-primary mb-3">
+                              <Shield className="h-3.5 w-3.5" />
+                              System Administration
+                         </div>
+                         <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl text-foreground">
+                              Platform <span className="text-gradient-kinetic">Health & Overview</span>
+                         </h1>
+                         <p className="mt-1.5 text-sm text-muted-foreground">
+                              Real-time telemetry and core infrastructure metrics for GearUp platform.
+                         </p>
+                    </div>
+               </div>
+
+               {/* Main Overview Dashboard Component */}
+               <AdminOverview metrics={platformMetrics} />
+          </div>
+     );
 }
