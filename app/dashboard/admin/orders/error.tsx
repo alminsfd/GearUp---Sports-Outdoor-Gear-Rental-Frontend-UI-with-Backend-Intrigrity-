@@ -1,102 +1,55 @@
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+'use client';
 
-export default function OrderManagementSkeleton() {
+import { useEffect } from 'react';
+import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import Link from 'next/link';
+
+interface ErrorProps {
+     error?: Error & { digest?: string };
+     reset: () => void;
+}
+
+export default function OrderManagementError({ error, reset }: ErrorProps) {
+     useEffect(() => {
+          if (error) {
+               console.error('Rental Order Management Error:', error);
+          }
+     }, [error]);
+
      return (
-          <div className="space-y-6 animate-pulse">
-               {/* Table Container Skeleton */}
-               <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-card/60 backdrop-blur-xl shadow-xl">
-                    <div className="overflow-x-auto">
-                         <table className="w-full text-left text-sm">
-                              {/* Header */}
-                              <thead className="border-b border-border/60 bg-muted/40 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                                   <tr>
-                                        <th scope="col" className="px-6 py-4">Order & Item</th>
-                                        <th scope="col" className="px-6 py-4">Customer</th>
-                                        <th scope="col" className="px-6 py-4">Provider</th>
-                                        <th scope="col" className="px-6 py-4">Duration & Cost</th>
-                                        <th scope="col" className="px-6 py-4">Payment</th>
-                                        <th scope="col" className="px-6 py-4">Order Status</th>
-                                        <th scope="col" className="px-6 py-4 text-right">Actions</th>
-                                   </tr>
-                              </thead>
+          <div className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-border/60 bg-card/60 backdrop-blur-xl p-8 text-center shadow-xl">
+               <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-rose-500/20 bg-rose-500/10 text-rose-500">
+                    <AlertTriangle className="h-8 w-8" />
+               </div>
 
-                              {/* Rows */}
-                              <tbody className="divide-y divide-border/40">
-                                   {Array.from({ length: 5 }).map((_, idx) => (
-                                        <tr key={idx} className="transition-colors">
-                                             {/* Order & Item */}
-                                             <td className="px-6 py-4">
-                                                  <div className="space-y-2">
-                                                       <div className="h-4 w-44 rounded bg-muted/80" />
-                                                       <div className="h-3 w-20 rounded bg-muted/50" />
-                                                  </div>
-                                             </td>
+               <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+                    Failed to load rental orders
+               </h2>
 
-                                             {/* Customer */}
-                                             <td className="px-6 py-4">
-                                                  <div className="flex items-center gap-2">
-                                                       <div className="h-7 w-7 rounded-xl bg-muted/80 shrink-0" />
-                                                       <div className="space-y-1.5">
-                                                            <div className="h-3.5 w-24 rounded bg-muted/80" />
-                                                            <div className="h-3 w-32 rounded bg-muted/50" />
-                                                       </div>
-                                                  </div>
-                                             </td>
+               <p className="mt-2 max-w-md text-xs text-muted-foreground leading-relaxed sm:text-sm">
+                    {error?.message || 'An unexpected error occurred while retrieving order records. Please verify your connection or try again.'}
+               </p>
 
-                                             {/* Provider */}
-                                             <td className="px-6 py-4">
-                                                  <div className="flex items-center gap-2">
-                                                       <div className="h-7 w-7 rounded-xl bg-muted/80 shrink-0" />
-                                                       <div className="space-y-1.5">
-                                                            <div className="h-3.5 w-24 rounded bg-muted/80" />
-                                                            <div className="h-3 w-32 rounded bg-muted/50" />
-                                                       </div>
-                                                  </div>
-                                             </td>
+               {error?.digest && (
+                    <span className="mt-2 rounded-md bg-muted/60 px-2 py-1 font-mono text-[10px] text-muted-foreground">
+                         Digest ID: {error.digest}
+                    </span>
+               )}
 
-                                             {/* Duration & Cost */}
-                                             <td className="px-6 py-4">
-                                                  <div className="space-y-1.5">
-                                                       <div className="h-4 w-16 rounded bg-muted/80" />
-                                                       <div className="h-3 w-24 rounded bg-muted/50" />
-                                                  </div>
-                                             </td>
+               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                    <button
+                         onClick={() => reset()}
+                         className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-4 py-2 text-xs font-semibold text-primary transition-all hover:bg-primary hover:text-primary-foreground active:scale-95 cursor-pointer"
+                    >
+                         <RefreshCw className="h-4 w-4" /> Try Again
+                    </button>
 
-                                             {/* Payment */}
-                                             <td className="px-6 py-4">
-                                                  <div className="space-y-1.5">
-                                                       <div className="h-5 w-16 rounded-md bg-muted/70" />
-                                                       <div className="h-3 w-20 rounded bg-muted/40" />
-                                                  </div>
-                                             </td>
-
-                                             {/* Order Status */}
-                                             <td className="px-6 py-4">
-                                                  <div className="h-6 w-24 rounded-full bg-muted/70" />
-                                             </td>
-
-                                             {/* Action Button */}
-                                             <td className="px-6 py-4 text-right">
-                                                  <div className="ml-auto h-8 w-20 rounded-xl bg-muted/80" />
-                                             </td>
-                                        </tr>
-                                   ))}
-                              </tbody>
-                         </table>
-                    </div>
-
-                    {/* Pagination Skeleton */}
-                    <div className="flex flex-col gap-3 border-t border-border/60 px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
-                         <div className="h-4 w-28 rounded bg-muted/70" />
-                         <div className="flex items-center gap-2">
-                              <div className="flex items-center gap-1 rounded-xl border border-border/60 bg-card/60 px-3 py-1.5 text-xs font-semibold text-muted-foreground/50 opacity-50">
-                                   <ChevronLeft className="h-3.5 w-3.5" /> Previous
-                              </div>
-                              <div className="flex items-center gap-1 rounded-xl border border-border/60 bg-card/60 px-3 py-1.5 text-xs font-semibold text-muted-foreground/50 opacity-50">
-                                   Next <ChevronRight className="h-3.5 w-3.5" />
-                              </div>
-                         </div>
-                    </div>
+                    <Link
+                         href="/dashboard"
+                         className="inline-flex items-center gap-2 rounded-xl border border-border/60 bg-card/60 px-4 py-2 text-xs font-semibold text-foreground transition-all hover:bg-muted active:scale-95"
+                    >
+                         <Home className="h-4 w-4" /> Back to Dashboard
+                    </Link>
                </div>
           </div>
      );

@@ -122,8 +122,7 @@ export async function getAllAdminGears(queryParams?: { page?: number; limit?: nu
           if (queryParams?.limit) searchParams.append('limit', queryParams.limit.toString());
 
           const queryString = searchParams.toString();
-          const endpoint = `${process.env.BACKEND_API_URL}/admin/gear${queryString ? `?${queryString}` : ''}`;
-
+          const endpoint = `${process.env.BACKEND_API_URL}/api/admin/gear${queryString ? `?${queryString}` : ''}`;
           const res = await fetch(endpoint, {
                method: 'GET',
                headers: {
@@ -176,7 +175,7 @@ export async function getAllAdminRentals(queryParams?: { page?: number; limit?: 
           if (queryParams?.limit) searchParams.append('limit', queryParams.limit.toString());
 
           const queryString = searchParams.toString();
-          const endpoint = `${process.env.BACKEND_API_URL}/admin/rentals${queryString ? `?${queryString}` : ''}`;
+          const endpoint = `${process.env.BACKEND_API_URL}/api/admin/rentals${queryString ? `?${queryString}` : ''}`;
 
           const res = await fetch(endpoint, {
                method: 'GET',
