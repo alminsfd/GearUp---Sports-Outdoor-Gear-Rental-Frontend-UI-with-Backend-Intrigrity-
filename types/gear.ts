@@ -79,3 +79,13 @@ export interface IBike {
 export interface IsAvailable {
      isAvailable: boolean
 }
+
+export interface Product {
+     title: string;
+     description: string;
+     pricePerDay: number;
+     brand: string;
+     categoryId: string;
+     stock: number;
+     images: string[];
+}

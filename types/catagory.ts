@@ -38,3 +38,4 @@ export interface ICategoryListResponse {
      message: string;
      data: ICategoryListItem[];
 }
+
