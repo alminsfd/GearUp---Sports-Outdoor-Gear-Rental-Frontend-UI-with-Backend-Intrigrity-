@@ -3,6 +3,7 @@ import { getMe } from '@/service/getMe'
 import { ReactNode } from 'react'
 import { AmbientGlow } from '@/components/common/ambient-glow'
 import { Toaster } from 'sonner'
+import Footer from '@/components/footer/Footer'
 
 export default async function PublicLayout({ children }: { children: ReactNode }) {
      const user = await getMe()
@@ -18,6 +19,7 @@ export default async function PublicLayout({ children }: { children: ReactNode }
                     <main className="flex-1 pt-24 sm:pt-28">{children}</main>
                     <Toaster />
                     {/* <Footer /> */}
+                    <Footer></Footer>
                </div>
           </div>
      )

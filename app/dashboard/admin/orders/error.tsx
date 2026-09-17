@@ -17,7 +17,7 @@ export default function OrderManagementError({ error, reset }: ErrorProps) {
      }, [error]);
 
      return (
-          <div className="flex min-h-[420px] flex-col items-center justify-center rounded-3xl border border-border/60 bg-card/60 backdrop-blur-xl p-8 text-center shadow-xl">
+          <div className="flex min-h-105 flex-col items-center justify-center rounded-3xl border border-border/60 bg-card/60 backdrop-blur-xl p-8 text-center shadow-xl">
                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-rose-500/20 bg-rose-500/10 text-rose-500">
                     <AlertTriangle className="h-8 w-8" />
                </div>

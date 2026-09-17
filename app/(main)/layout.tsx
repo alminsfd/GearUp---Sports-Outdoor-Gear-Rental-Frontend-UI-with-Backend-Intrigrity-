@@ -1,4 +1,5 @@
 import { AmbientGlow } from "@/components/common/ambient-glow";
+import Footer from "@/components/footer/Footer";
 import { Navbar } from "@/components/navbar/Navbar";
 import { getMe } from "@/service/getMe";
 import { Toaster } from "sonner";
@@ -13,6 +14,7 @@ export default async function MainLayout({ children }: { children: React.ReactNo
                <Navbar user={user} />
                <main>{children}</main>
                <Toaster position="top-right" richColors />
+               <Footer></Footer>
           </>
      );
 }
