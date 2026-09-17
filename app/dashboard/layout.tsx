@@ -3,7 +3,7 @@ import DashboardShell from '@/components/dashboard/DashboardShell'
 import { getMe } from '@/service/getMe'
 import { AmbientGlow } from '@/components/common/ambient-glow'
 import { Toaster } from 'sonner'
-
+export const dynamic = 'force-dynamic';
 export default async function DashboardLayout({
      children,
 }: {

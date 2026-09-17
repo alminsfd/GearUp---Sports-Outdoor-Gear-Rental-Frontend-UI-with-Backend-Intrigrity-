@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { AmbientGlow } from '@/components/common/ambient-glow'
 import { Toaster } from 'sonner'
 import Footer from '@/components/footer/Footer'
-
+export const dynamic = 'force-dynamic';
 export default async function PublicLayout({ children }: { children: ReactNode }) {
      const user = await getMe()
 

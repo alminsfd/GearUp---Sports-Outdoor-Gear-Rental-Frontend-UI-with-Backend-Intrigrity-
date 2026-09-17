@@ -1,10 +1,13 @@
 "use server";
 
+
 import { jwtUtils } from "@/lib/auth/jwt";
 import { cookies } from "next/headers";
 
+
 export const getNewAccessToken = async () => {
      try {
+
           const cookieStore = await cookies();
           const refreshToken = cookieStore.get("refreshToken")?.value;
 
@@ -33,6 +36,7 @@ export const getNewAccessToken = async () => {
           const result = await res.json();
           return result;
      } catch (error) {
+          console.error(error);
           return {
                success: false,
                message: "Something went wrong while refreshing token!",

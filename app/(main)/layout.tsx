@@ -3,6 +3,7 @@ import Footer from "@/components/footer/Footer";
 import { Navbar } from "@/components/navbar/Navbar";
 import { getMe } from "@/service/getMe";
 import { Toaster } from "sonner";
+export const dynamic = 'force-dynamic';
 
 
 export default async function MainLayout({ children }: { children: React.ReactNode }) {
