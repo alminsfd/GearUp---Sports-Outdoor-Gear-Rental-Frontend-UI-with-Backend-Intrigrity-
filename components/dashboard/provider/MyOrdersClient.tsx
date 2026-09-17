@@ -178,8 +178,9 @@ export default function MyOrdersClient({ initialOrders }: MyOrdersClientProps) {
                } else {
                     toast.error(res?.message || 'Failed to update order status.', { id: toastId });
                }
-          } catch (error: any) {
-               toast.error(error?.message || 'An unexpected error occurred', { id: toastId });
+          } catch (error: unknown) {
+               const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+               toast.error(message, { id: toastId });
           } finally {
                setUpdatingId(null);
           }
@@ -286,7 +287,7 @@ export default function MyOrdersClient({ initialOrders }: MyOrdersClientProps) {
                                                                            </div>
                                                                       )}
                                                                  </div>
-                                                                 <div className="max-w-[200px] lg:max-w-xs">
+                                                                 <div className="max-w-50 lg:max-w-xs">
                                                                       <span className="font-semibold text-foreground line-clamp-1 group-hover:text-primary transition-colors">
                                                                            {order.gearItem?.title || 'Gear Listing'}
                                                                       </span>
@@ -306,7 +307,7 @@ export default function MyOrdersClient({ initialOrders }: MyOrdersClientProps) {
                                                                  </div>
                                                                  <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                                                                       <Mail className="h-3 w-3 shrink-0" />
-                                                                      <span className="truncate max-w-[150px]">{order.customer?.email}</span>
+                                                                      <span className="truncate max-w-37.5">{order.customer?.email}</span>
                                                                  </div>
                                                                  <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                                                                       <Phone className="h-3 w-3 shrink-0" />
@@ -342,7 +343,7 @@ export default function MyOrdersClient({ initialOrders }: MyOrdersClientProps) {
                                                                            <Sparkles className="h-2.5 w-2.5" />
                                                                            {order.payment.paymentMethod}
                                                                       </span>
-                                                                      <p className="text-[11px] font-mono text-muted-foreground truncate max-w-[130px]">
+                                                                      <p className="text-[11px] font-mono text-muted-foreground truncate max-w-32.5">
                                                                            {order.payment.transactionId}
                                                                       </p>
                                                                  </div>

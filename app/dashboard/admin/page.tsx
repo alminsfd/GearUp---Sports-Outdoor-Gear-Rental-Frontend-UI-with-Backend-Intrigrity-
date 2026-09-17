@@ -17,7 +17,7 @@ export default async function AdminOverviewPage() {
      const activeGears = gearsRes?.data?.length ?? 0;
      const totalRentals = rentalsRes?.data?.length ?? 0;
 
-     console.log("Totals", totalRentals, activeGears, totalRentals);
+
 
 
      const totalRevenue = rentalsRes?.data?.reduce((acc, order) => {

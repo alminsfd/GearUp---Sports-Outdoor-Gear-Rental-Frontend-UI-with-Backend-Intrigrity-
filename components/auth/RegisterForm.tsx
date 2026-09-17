@@ -42,7 +42,6 @@ export function RegisterForm() {
 
 
      useEffect(() => {
-          console.log('State updated:', state)
           if (!state.message) return
           if (state.success) {
                toast.success(state.message)
