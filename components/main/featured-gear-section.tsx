@@ -8,7 +8,7 @@ import { IGear } from '@/types/gear'
 import { GearCard } from '@/components/gear/gear-card'
 import { FadeIn } from './motion-wrapper'
 
-type FilterCategory = 'all' | 'camping' | 'cycling' | 'cameras' | 'climbing'
+type FilterCategory = 'all' | 'camping' | 'cycling' | 'cameras' | 'hiking'
 
 interface FeaturedGearSectionProps {
      initialGears?: IGear[]
@@ -146,7 +146,7 @@ const fallbackFeaturedGears: IGear[] = [
 ]
 
 export function FeaturedGearSection({ initialGears }: FeaturedGearSectionProps) {
-     const [activeFilter, setActiveFilter] = useState<'all' | 'camping' | 'cycling' | 'cameras' | 'climbing'>('all')
+     const [activeFilter, setActiveFilter] = useState<'all' | 'camping' | 'cycling' | 'cameras' | 'hiking'>('all')
 
      // Use fetched gears if >= 4 items, else use curated mock dataset
      const gearsList = initialGears && initialGears.length >= 4 ? initialGears : fallbackFeaturedGears
@@ -158,7 +158,7 @@ export function FeaturedGearSection({ initialGears }: FeaturedGearSectionProps) 
                if (activeFilter === 'camping') return cat.includes('camp') || cat.includes('hike')
                if (activeFilter === 'cycling') return cat.includes('cycl') || cat.includes('bike')
                if (activeFilter === 'cameras') return cat.includes('cam') || cat.includes('photo') || cat.includes('drone')
-               if (activeFilter === 'climbing') return cat.includes('climb') || cat.includes('alpine')
+               if (activeFilter === 'hiking') return cat.includes('hikin') || cat.includes('alpine')
                return true
           }).slice(0, 8)
      }, [gearsList, activeFilter])
@@ -189,20 +189,19 @@ export function FeaturedGearSection({ initialGears }: FeaturedGearSectionProps) 
                               {[
                                    { id: 'all', label: 'All Gear' },
                                    { id: 'camping', label: 'Camping' },
-                                   { id: 'cycling', label: 'Bikes' },
-                                   { id: 'cameras', label: 'Cameras & Drones' },
-                                   { id: 'climbing', label: 'Climbing' },
+                                   { id: 'cycling', label: 'cycling' },
+                                   { id: 'cameras', label: 'Cameras' },
+                                   { id: 'hiking', label: 'Hiking' },
                               ].map((tab) => {
                                    const isActive = activeFilter === tab.id
                                    return (
                                         <button
                                              key={tab.id}
                                              onClick={() => setActiveFilter(tab.id as FilterCategory)}
-                                             className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all duration-200 cursor-pointer ${
-                                                  isActive
-                                                       ? 'bg-primary text-primary-foreground shadow-sm'
-                                                       : 'text-muted-foreground hover:text-foreground hover:bg-muted/70'
-                                             }`}
+                                             className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition-all duration-200 cursor-pointer ${isActive
+                                                  ? 'bg-primary text-primary-foreground shadow-sm'
+                                                  : 'text-muted-foreground hover:text-foreground hover:bg-muted/70'
+                                                  }`}
                                         >
                                              {tab.label}
                                         </button>
