@@ -20,7 +20,7 @@ export default function CategoryListClient({ categories }: CategoryListClientPro
           <div className="space-y-8">
                {/* Action Bar: Search Input */}
                <div className="relative max-w-md">
-                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                    <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-muted-foreground">
                          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                          </svg>
@@ -30,7 +30,7 @@ export default function CategoryListClient({ categories }: CategoryListClientPro
                          value={searchQuery}
                          onChange={(e) => setSearchQuery(e.target.value)}
                          placeholder="Search categories..."
-                         className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 transition-all focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-500/10 shadow-sm"
+                         className="w-full rounded-xl border border-border bg-card py-2.5 pl-10 pr-4 text-sm text-foreground placeholder-muted-foreground transition-all focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10 shadow-sm"
                     />
                </div>
 
@@ -42,12 +42,12 @@ export default function CategoryListClient({ categories }: CategoryListClientPro
                          ))}
                     </div>
                ) : (
-                    <div className="rounded-2xl border border-dashed border-slate-200 bg-white py-12 text-center">
+                    <div className="rounded-2xl border border-dashed border-border bg-card py-12 text-center">
                          {/*  eslint-disable-next-line react/no-unescaped-entities */}
-                         <p className="text-base font-medium text-slate-600">No categories found matching "{searchQuery}"</p>
+                         <p className="text-base font-medium text-muted-foreground">No categories found matching &quot;{searchQuery}&quot;</p>
                          <button
                               onClick={() => setSearchQuery('')}
-                              className="mt-3 text-sm font-semibold text-emerald-600 hover:underline"
+                              className="mt-3 text-sm font-semibold text-primary hover:underline"
                          >
                               Clear Search Filter
                          </button>

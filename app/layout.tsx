@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { ThemeProvider } from "@/providers/theme-provider";
 
 // 1. Primary UI & Body Font (Clean, accessible, modern SaaS feel)
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
@@ -44,9 +45,16 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background text-foreground font-sans antialiased selection:bg-primary selection:text-primary-foreground">
-        <main>
-          {children}
-        </main>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <main>
+            {children}
+          </main>
+        </ThemeProvider>
       </body>
     </html>
   );

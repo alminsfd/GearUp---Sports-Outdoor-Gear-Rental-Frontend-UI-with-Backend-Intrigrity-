@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
-import { BookOpen, Compass, Home, Menu, Moon, Search, X, ChevronRight } from 'lucide-react'
+import { BookOpen, Compass, Home, Menu, Moon, Sun, Search, X, ChevronRight } from 'lucide-react'
+import { useTheme } from 'next-themes'
 import { Logo } from './Logo'
 import { CategoryMenu } from './CategoryMenu'
 import { ProfileMenu } from './ProfileMenu'
@@ -24,6 +25,8 @@ type NavbarProps = {
 export function Navbar({ user }: NavbarProps) {
      const pathname = usePathname()
      const router = useRouter()
+     const { theme, setTheme } = useTheme()
+     const [mounted, setMounted] = useState(false)
 
      const [categoriesOpen, setCategoriesOpen] = useState(false)
      const [profileOpen, setProfileOpen] = useState(false)
@@ -32,6 +35,11 @@ export function Navbar({ user }: NavbarProps) {
 
      // Search Input State
      const [searchQuery, setSearchQuery] = useState('')
+
+     // Avoid hydration mismatch — only render theme icon after mount
+     useEffect(() => { setMounted(true) }, [])
+
+     const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
 
      // Search Action Handler
      const handleSearchSubmit = (e: React.FormEvent) => {
@@ -119,8 +127,12 @@ export function Navbar({ user }: NavbarProps) {
                               )}
                          </form>
 
-                         <button type="button" className="icon-button hidden sm:flex" aria-label="Toggle Theme">
-                              <Moon className="size-4.25" />
+                         <button type="button" onClick={toggleTheme} className="icon-button hidden sm:flex" aria-label="Toggle Theme">
+                              {mounted && theme === 'dark' ? (
+                                   <Sun className="size-4.25" />
+                              ) : (
+                                   <Moon className="size-4.25" />
+                              )}
                          </button>
                          <div className="hidden h-5 w-px bg-border sm:block" />
                          <div className="hidden sm:block">
@@ -191,6 +203,36 @@ export function Navbar({ user }: NavbarProps) {
                                         </Link>
                                    )
                               })}
+                         </div>
+
+                         {/* Mobile Bottom Row — Theme + Profile */}
+                         <div className="flex items-center justify-between border-t border-border pt-3">
+                              <button
+                                   type="button"
+                                   onClick={toggleTheme}
+                                   className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition-all hover:bg-muted hover:text-foreground"
+                                   aria-label="Toggle Theme"
+                              >
+                                   {mounted && theme === 'dark' ? (
+                                        <>
+                                             <Sun className="size-4" />
+                                             <span>Light Mode</span>
+                                        </>
+                                   ) : (
+                                        <>
+                                             <Moon className="size-4" />
+                                             <span>Dark Mode</span>
+                                        </>
+                                   )}
+                              </button>
+                              <ProfileMenu
+                                   user={user}
+                                   open={profileOpen}
+                                   setOpen={(v) => {
+                                        setProfileOpen(v)
+                                        setCategoriesOpen(false)
+                                   }}
+                              />
                          </div>
                     </div>
                )}

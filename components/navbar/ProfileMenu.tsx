@@ -134,7 +134,7 @@ export function ProfileMenu({ open, setOpen, user }: ProfileMenuProps) {
                          )}
 
                          <Link
-                              href="/profile"
+                              href="/dashboard/profile"
                               onClick={() => setOpen(false)}
                               className="menu-item flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium transition-colors hover:bg-muted"
                          >
