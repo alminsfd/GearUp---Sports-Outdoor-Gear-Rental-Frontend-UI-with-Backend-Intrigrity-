@@ -12,6 +12,14 @@
 
 ---
 
+## 🔗 Live Links & Deployment
+
+* **Backend Live API url :** [Let's go](https://gearrentels.vercel.app)
+* **Fontend Live url :** [Let's go](https://gear-up-fontend.vercel.app)
+---
+
+---
+
 ## 🌟 Key Features
 
 ### 👤 Multi-Role Architecture & Dashboards
