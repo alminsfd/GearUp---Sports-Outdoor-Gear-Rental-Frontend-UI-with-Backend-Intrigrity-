@@ -218,7 +218,7 @@ export default function ProviderOverviewClient({
                                                        <td className="px-6 py-4 text-muted-foreground">{formatDate(order.createdAt)}</td>
                                                        <td className="px-6 py-4 text-right">
                                                             <Link
-                                                                 href={`/orders/${order.id}`}
+                                                                 href={`/dashboard/provider/order`}
                                                                  className="rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
                                                             >
                                                                  Details
