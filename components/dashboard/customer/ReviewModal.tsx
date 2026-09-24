@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Star, X } from 'lucide-react'
+import { Star, X, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { postReviews } from '../../../app/dashboard/_action/customar_action'
 import { toast } from 'sonner'
@@ -14,32 +14,51 @@ interface ReviewModalProps {
 
 export default function ReviewModal({ gearTitle, gearItemId, onClose }: ReviewModalProps) {
      const [rating, setRating] = useState(5)
+     const [hoverRating, setHoverRating] = useState(0)
      const [reviewComment, setReviewComment] = useState('')
+     const [isSubmitting, setIsSubmitting] = useState(false)
+
      const handleReviewSubmit = async (e: React.FormEvent) => {
           e.preventDefault()
 
+          if (!reviewComment.trim()) {
+               toast.error('Please enter a feedback comment.')
+               return
+          }
 
-          const result = await postReviews({
-               gearItemId,
-               rating,
-               comment: reviewComment,
-          })
+          setIsSubmitting(true)
 
-          if (result?.success) {
-               setReviewComment('')
-               onClose()
-               toast.success("review submitted successfully")
-          } else {
-               // Show error toast/alert if needed
-               console.error(result?.message)
+          try {
+               const result = await postReviews({
+                    gearItemId,
+                    rating,
+                    comment: reviewComment,
+               })
+
+               if (result?.success) {
+                    setReviewComment('')
+                    toast.success(result?.message || 'Review submitted successfully!')
+                    onClose()
+               } else {
+                    // Show error message via toast if user already reviewed or server action failed
+                    toast.error(result?.message || 'Failed to submit review')
+               }
+          } catch (error) {
+               toast.error('An unexpected error occurred. Please try again.')
+               console.error(error)
+          } finally {
+               setIsSubmitting(false)
           }
      }
+
      return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
                <div className="glass-panel w-full max-w-md rounded-3xl border bg-card p-6 shadow-2xl relative space-y-4">
                     <button
+                         type="button"
                          onClick={onClose}
-                         className="absolute right-4 top-4 text-muted-foreground hover:text-foreground"
+                         disabled={isSubmitting}
+                         className="absolute right-4 top-4 text-muted-foreground hover:text-foreground disabled:opacity-50"
                     >
                          <X className="size-5" />
                     </button>
@@ -60,13 +79,18 @@ export default function ReviewModal({ gearTitle, gearItemId, onClose }: ReviewMo
                                         <button
                                              key={star}
                                              type="button"
+                                             disabled={isSubmitting}
                                              onClick={() => setRating(star)}
-                                             className="text-amber-400 hover:scale-110 transition-transform"
+                                             onMouseEnter={() => setHoverRating(star)}
+                                             onMouseLeave={() => setHoverRating(0)}
+                                             className="text-amber-400 hover:scale-110 transition-transform disabled:opacity-50"
                                         >
                                              <Star
                                                   className={cn(
-                                                       'size-7',
-                                                       star <= rating ? 'fill-amber-400' : 'text-muted'
+                                                       'size-7 transition-colors',
+                                                       star <= (hoverRating || rating)
+                                                            ? 'fill-amber-400 text-amber-400'
+                                                            : 'text-muted-foreground/30'
                                                   )}
                                              />
                                         </button>
@@ -81,10 +105,11 @@ export default function ReviewModal({ gearTitle, gearItemId, onClose }: ReviewMo
                               <textarea
                                    rows={4}
                                    required
+                                   disabled={isSubmitting}
                                    value={reviewComment}
                                    onChange={(e) => setReviewComment(e.target.value)}
                                    placeholder="How was the equipment condition and experience?"
-                                   className="w-full rounded-2xl border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                                   className="w-full rounded-2xl border bg-background p-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
                               />
                          </div>
 
@@ -92,15 +117,18 @@ export default function ReviewModal({ gearTitle, gearItemId, onClose }: ReviewMo
                               <button
                                    type="button"
                                    onClick={onClose}
-                                   className="rounded-xl px-4 py-2 text-xs font-bold text-muted-foreground hover:bg-muted"
+                                   disabled={isSubmitting}
+                                   className="rounded-xl px-4 py-2 text-xs font-bold text-muted-foreground hover:bg-muted disabled:opacity-50"
                               >
                                    Cancel
                               </button>
                               <button
                                    type="submit"
-                                   className="rounded-xl bg-primary px-5 py-2 text-xs font-bold text-primary-foreground shadow-md hover:opacity-90"
+                                   disabled={isSubmitting}
+                                   className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2 text-xs font-bold text-primary-foreground shadow-md hover:opacity-90 disabled:opacity-50 cursor-pointer"
                               >
-                                   Submit Review
+                                   {isSubmitting && <Loader2 className="size-3.5 animate-spin" />}
+                                   {isSubmitting ? 'Submitting...' : 'Submit Review'}
                               </button>
                          </div>
                     </form>
